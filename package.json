@@ -34,7 +34,6 @@
   },
   "dependencies": {
     "@babel/core": "^7.24.9",
-    "jquery": "^3.7.1",
-    "summernote": "^0.8.20"
+    "@editorjs/editorjs": "^2.30.2"
   }
 }
