@@ -33,10 +33,8 @@ module.exports = {
     },
 
     entry: {
-        index: "./src/index.js",
-        "index.min": "./src/index.js",
-        notes: "./src/notes.js",
-        "notes.min": "./src/notes.js",
+        notebook: "./src/notebook.js",
+        "notebook.min": "./src/notebook.js",
     },
     output: {
         publicPath: "/",
@@ -47,6 +45,7 @@ module.exports = {
 
     externals: {
         jquery: 'jQuery',
+        jQuery: 'jQuery',
     },
 
     module: {
@@ -65,18 +64,6 @@ module.exports = {
                     {
                         loader: "babel-loader",
                     },
-                ],
-            },
-            {
-                test: /\.html$/i,
-                exclude: /node_modules/,
-                use: [
-                    {
-                        loader: "html-loader",
-                        options: {
-                            minimize: true,
-                        }
-                    }
                 ],
             },
             {
@@ -165,18 +152,12 @@ module.exports = {
           filename: '[file].map',
           exclude: /\.min\./,
         }),
-        new HtmlWebpackPlugin({
-            inject: true,
-            template: './src/index.html',
-            filename: 'index.html',
-        }),
     ],
     devtool: false,
     resolve: {
         roots: [path.resolve('./src')],
         alias: {
-            "@": path.resolve(__dirname,"src/"),
-            "jQuery": "jquery",
+            "@": path.resolve(__dirname,"../src/"),
         },
     },
 };

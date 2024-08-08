@@ -1,12 +1,12 @@
 {
-  "name": "notes",
+  "name": "notebook",
   "version": "1.0.0",
-  "description": "",
+  "description": "Simple Notes App build with JavaScript",
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "webpack --watch",
     "dev": "webpack --config=config/webpack.development.js",
+    "dev-watch": "webpack --config=config/webpack.development.js --watch",
     "build": "webpack --config=config/webpack.production.js"
   },
   "keywords": [],

@@ -7,12 +7,16 @@ module.exports = {
     mode: "development",
     entry: {
         index: "./src/index.js",
-        notes: "./src/notes.js",
+        notebook: "./src/notebook.js",
     },
     output: {
         filename: "[name].js",
         path: path.resolve(__dirname,"../dist"),
         clean: true,
+    },
+    externals: {
+        jquery: 'jQuery',
+        jQuery: 'jQuery',
     },
     target: "node",
     module: {
@@ -89,7 +93,7 @@ module.exports = {
     devtool: 'source-map',
     resolve: {
         alias: {
-            "@": path.resolve(__dirname,"src/"),
+            "@": path.resolve(__dirname,"../src/"),
             "jQuery": "jquery",
         },
     },
