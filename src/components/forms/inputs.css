@@ -1,0 +1,110 @@
+
+.input-field {
+    display: inline-block;
+    width: fit-content;
+    background-color: var(--color-bg-field);
+    color: var(--color-text-field);
+    box-shadow: 1px 1px 2px #0002;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    padding: 0.5em 1em;
+    overflow: hidden;
+
+    vertical-align: top;
+}
+.input-field[label].readonly {
+    cursor: auto;
+    box-shadow: inset 1px 1px 2px #0002;
+}
+.input-field .input-with-helper {
+    display: block;
+    height: 0;
+    width: fit-content;
+    overflow: hidden;
+    text-wrap: nowrap;
+    white-space: pre;
+}
+.input-field:not(.disabled) {
+    cursor: text;
+}
+.input-field[label] {
+    position: relative;
+}
+.input-field[label]::before,
+.input-field[label]::after {
+    content: attr(label);
+    display: block;
+    line-height: 1;
+    height: 1em;
+}
+.input-field[label]::before{
+    visibility: hidden;
+}
+.input-field[label].readonly::after {
+    display: none;
+}
+.input-field[label]::after {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    padding: inherit;
+    top: calc(50% - 1em);
+    left: 0;
+    font-size: inherit;
+    opacity: 1;
+    transition-duration: 200ms;
+    transition-property: top, font-size, opacity;
+}
+.input-field[label].readonly::before,
+.input-field[label].focus::after,
+.input-field[label]:has(input:focus)::after,
+.input-field[label]:has(input:not(:placeholder-shown))::after {
+    visibility: visible;
+    font-size: 0.8em;
+    opacity: 0.5;
+    top: 0;
+    transform: translateY(0);
+}
+.input-field[label]:has(input:focus)::after {
+    color: var(--color-text-field-active);
+}
+.input-field[label] input::placeholder {
+    visibility: hidden;
+}
+.input-field input,
+.input-field .input-readonly {
+    display: block;
+    width: 100%;
+    border: 0;
+    outline: none;
+    background-color: transparent;
+    color: inherit;
+    font-size: inherit;
+    padding: 0;
+}
+.input-field input.inline {
+    display: inline-block;
+    width: auto;
+}
+.input-field input.inline:focus {
+    box-shadow: inset 0 -1px 0; /* underline */
+}
+
+.input-field.with-hint {
+    position: relative;
+    margin-bottom: 1em;
+    overflow: visible;
+}
+.input-field .input-hint {
+    position: absolute;
+    top: calc(100% + 0.1em);
+    left: 0;
+    width: 100%;
+    display: block;
+    font-size: 0.8em;
+    opacity: 0.5;
+    color: inherit;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}

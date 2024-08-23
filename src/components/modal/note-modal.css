@@ -1,0 +1,10 @@
+.modal-content .input-field,
+.modal-content .input-field *,
+.modal-content .input-field *:before,
+.modal-content .input-field *:after {
+    box-sizing: border-box;
+}
+.modal-content .input-field {
+    max-width: calc(100% - 16px);
+    margin: 8px;
+}

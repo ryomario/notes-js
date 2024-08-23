@@ -7,7 +7,6 @@ module.exports = {
     mode: "development",
     entry: {
         index: "./src/index.js",
-        notebook: "./src/notebook.js",
     },
     output: {
         filename: "[name].js",

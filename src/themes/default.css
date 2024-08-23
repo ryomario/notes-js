@@ -1,0 +1,24 @@
+:root,
+[theme=default] {
+    /* source https://colorhunt.co/palette/dca47cffd3b6fcf8f3698474 */
+    --color-bg-field: rgb(255, 255, 255);
+    --color-text-field: rgb(0, 0, 0);
+    --color-text-field-active: #00f;
+
+    --color-bg: rgb(252, 248, 243);
+    --color-text: rgb(0, 0, 0);
+
+    --color-header: rgb(220, 164, 124);
+    --color-header-text: rgb(255, 255, 255);
+
+    --color-card-rgb: 255, 230, 200;
+    --color-card: rgb(var(--color-card-rgb));
+    --color-card-text: rgb(0, 0, 0);
+
+    --color-accent-rgb: 105, 132, 116;
+    --color-accent: rgb(var(--color-accent-rgb));
+    --color-accent-text: #fff;
+
+    --color-gray-rgb: 105, 105, 105;
+    --color-gray: rgb(var(--color-gray-rgb));
+}

@@ -1,0 +1,35 @@
+.notes-container.list-view {
+    background-color: transparent;
+    padding: 0;
+    overflow: hidden;
+}
+.list-view .note {
+    width: 100%;
+    padding: 0.5em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+.list-view .note:hover {
+    background-color: var(--color-card);
+}
+.list-view .note-main {
+    display: flex;
+    flex-direction: column;
+    max-width: calc(100% - 150px - 0.5em);
+}
+.list-view .note-header {
+    display: flex;
+}
+.list-view .note-tools {
+    display: flex;
+    align-items: center;
+    min-width: 150px;
+}
+.list-view .note-info {
+    margin: 0;
+}
+.list-view .note-tools > *:not(:last-child) {
+    margin-right: 0.5em;
+}

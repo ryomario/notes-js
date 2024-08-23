@@ -1,0 +1,76 @@
+.notes-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+.notes-container * {
+    box-sizing: border-box;
+}
+.note-title {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-right: 0.5em;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.note button.btn-icon {
+    background-color: transparent;
+    min-width: 24px;
+    min-height: 24px;
+    padding: 6px;
+    border: none;
+    color: inherit;
+    overflow: hidden;
+    border-radius: 50%;
+    opacity: 1;
+}
+.note button.btn-icon:not(.disabled):hover {
+    cursor: pointer;
+    background-color: #0001;
+}
+.note-labels {
+    display: flex;
+    flex-wrap: wrap;
+}
+.note-label {
+    display: inline-flex;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    margin-right: 0.25em;
+    margin-bottom: 0.25em;
+    font-size: 0.8em;
+    line-height: 1;
+    vertical-align: baseline;
+    font-weight: 700;
+    white-space: nowrap;
+    border-radius: 1em;
+    padding: 0.25em 0.4em;
+}
+.note-label button {
+    font-size: inherit;
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+    color: inherit;
+
+    height: 1em;
+    display: inline-block;
+    margin-left: 0.5em;
+    pointer-events: all;
+    cursor: pointer;
+    opacity: 0.8;
+}
+.note-label button:hover {
+    opacity: 1;
+}
+.note-info {
+    font-size: 0.8em;
+    margin-left: 1em;
+    opacity: 0.7;
+}
+
+.note button.icon-pinned {
+    padding: 0;
+    margin-right: 0.5em;
+}

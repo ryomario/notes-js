@@ -1,7 +1,13 @@
-import $ from "jquery";
-import "summernote/dist/summernote-lite";
-import "summernote/dist/summernote-lite.css";
+import Notebook from "./notebook";
 
-$('.summernote').summernote({
-    height: 150,
-})
+document.addEventListener('DOMContentLoaded', function(e) {
+    const notebook = Notebook.initialize(this.getElementById('notebook'),{
+        lang: 'id'
+    });
+    // console.log(notebook._settings.lang);
+    // console.log(notebook._settings.langInfo);
+
+    // setTimeout(() => {
+    //     notebook.Destroy();
+    // },10000);
+});

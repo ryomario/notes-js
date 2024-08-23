@@ -1,0 +1,9 @@
+.popup_wrap {
+    position: absolute;
+}
+.popup_wrap .popup_inner {
+    padding: 0.5em;
+    border-radius: 0.25em;
+    background-color: var(--color-bg);
+    box-shadow: 2px 2px 4px #0002;
+}

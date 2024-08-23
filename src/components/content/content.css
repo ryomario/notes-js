@@ -1,0 +1,36 @@
+.content {
+    padding: 8px;
+}
+.content .content-head,
+.content .content-tools,
+.content .content-title,
+.content .content-subtitle {
+    display: block;
+}
+.content .content-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: end;
+    flex-wrap: wrap;
+    text-align: center;
+    margin-block: 1em;
+}
+.content .content-head {
+    flex-grow: 1;
+}
+.content .content-tools > * {
+    margin-right: 1em;
+}
+.content .content-title {
+    font-size: 1.5em;
+    margin-block: 0.5em;
+}
+.content .content-subtitle {
+    opacity: 0.75;
+}
+
+@media (max-width: 480px) {
+    .content .content-tools > * {
+        margin-right: 0.5em;
+    }
+}

@@ -1,0 +1,104 @@
+header {
+    background-color: var(--color-header);
+    color: var(--color-header-text);
+    padding: 8px;
+    user-select: none;
+    box-shadow: 0 4px 8px #0002;
+    z-index: 9999;
+}
+header .header-container {
+    display: flex;
+    align-items: center;
+}
+header .app-icon {
+    display: block;
+    width: 24px;
+    height: 24px;
+}
+header .app-name {
+    font-size: 25px;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    line-height: 1;
+}
+header .space {
+    flex-grow: 1;
+}
+header .header-container > *:not(.space) {
+    margin-inline: 8px;
+}
+header button {
+    background-color: transparent;
+    color: inherit;
+    border: 0;
+    height: 24px;
+    width: 24px;
+    padding: 0;
+    opacity: 0.8;
+}
+header button:not(:disabled):hover {
+    opacity: 1;
+    cursor: pointer;
+}
+header button[label] {
+    width: auto;
+    display: flex;
+    align-items: center;
+}
+header button[label]::before {
+    content: attr(label);
+    text-wrap: nowrap;
+    margin-right: 0.5em;
+}
+header .search-field {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    width: 300px;
+    padding: 4px;
+    background-color: var(--color-header-text);
+    border-radius: 100px;
+    color: var(--color-header);
+    opacity: 0.8;
+}
+header .search-field:hover {
+    opacity: 1;
+    cursor: pointer;
+    outline: 4px solid var(--color-accent);
+}
+header .search-icon {
+    height: 24px;
+    width: 24px;
+}
+header .search-label {
+    flex-grow: 1;
+}
+header .search-label-shortcut {
+    font-family: monospace;
+    display: inline-block;
+    background-color: var(--color-header);
+    color: var(--color-header-text);
+    opacity: 0.5;
+    font-size: 0.75em;
+    font-weight: bold;
+    padding: 0.25em;
+    border-radius: 0.25em;
+}
+@media (max-width: 769px) {
+    header .search-field {
+        background-color: transparent;
+        color: inherit;
+        width: auto;
+    }
+    header .search-field:hover {
+        outline: none;
+    }
+    header .search-label,
+    header .search-label-shortcut {
+        display: none;
+    }
+
+    header button[label]::before {
+        display: none;
+    }
+}
