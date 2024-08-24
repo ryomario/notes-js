@@ -17,6 +17,8 @@ export function InputField(options) {
     hint.textContent = options.hint;
     hint.setAttribute('title', options.hint);
 
+    if(options.readonly)label.classList.add('readonly');
+
     input.value = options.value;
 
     label.appendChild(input);
@@ -41,7 +43,6 @@ export function InputText(options) {
     inputRO.textContent = options.value;
 
     if(options.readonly){
-        container.classList.add('readonly');
         container.appendChild(inputRO);
         input.remove();
     }else{
@@ -73,7 +74,6 @@ export function InputLabels(options) {
     labelsPreview.appendChild(input);
 
     if(options.readonly){
-        container.classList.add('readonly');
         input.remove();
     }
 
@@ -132,8 +132,31 @@ export function InputLabels(options) {
             e.preventDefault();
         }
     });
+    input.addEventListener('blur',function(e){
+        if(!e.isTrusted)return;
+        input.value = '';
+    })
 
     attachLabels();
 
     return {container, input:inputHelper};
+}
+
+export function InputToggle(options) {
+    const {container,input} = InputField({...options,
+        inputtype: 'checkbox',
+    });
+    const preview = dom.createNode('div','toggle-preview');
+
+    container.classList.add('input-toggle');
+
+    if(options.readonly){
+        input.remove();
+        if(options.value)container.classList.add('checked');
+    }
+    container.appendChild(preview);
+
+    input.checked = options.value;
+
+    return {container, input};
 }

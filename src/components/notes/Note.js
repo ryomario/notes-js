@@ -249,6 +249,20 @@ class Note {
                !(obj.labels && typeof obj.labels !== 'string');
     }
     
+    /**
+     * @param {Note} note1 
+     * @param {Note} note2 
+     */
+    static isChanged(note1,note2) {
+        const isSame = 
+               (note1._id == note2._id) &&
+               (note1._title == note2._title) &&
+               (note1._content == note2._content) &&
+               (note1._pinned == note2._pinned) &&
+               (note1._labels == note2._labels);
+
+        return !isSame;
+    }
     static compare(attr1, attr2, isAsc = true) {
         if(attr1 != attr2){
             if(typeof attr1 === 'string')return isAsc ? attr1.localeCompare(attr2):attr2.localeCompare(attr1);

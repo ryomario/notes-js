@@ -5,7 +5,7 @@ import Notebook from "@/notebook";
 import "./note-modal.css";
 import ModalContext from "@/contexts/ModalContext";
 import dom from "@/utils/dom";
-import { InputField, InputLabels, InputText } from "../forms/inputs";
+import { InputField, InputLabels, InputText, InputToggle } from "../forms/inputs";
 
 /**
  * 
@@ -33,11 +33,19 @@ function _init(ctx) {
         hint: readonly?'':Notebook.l10n('notemodal.labels.inputhint'),
         readonly,
     });
+    const {container: field_pinned, input: input_pinned} = InputToggle({
+        label: Notebook.l10n('notemodal.pinned.inputlabel'),
+        value: note.pinned,
+        inputname: 'input-pinned',
+        readonly,
+    });
     const elems = {
         field_title,
         input_title,
         field_labels,
         input_labels,
+        field_pinned,
+        input_pinned,
     };
 
 
@@ -49,8 +57,8 @@ function _init(ctx) {
     elems.input_title.value = note.title;
 
     ctx.triggerEvent('append.elements',elems.field_title);
-
     if((readonly && note.labels.length > 0) || !readonly)ctx.triggerEvent('append.elements',elems.field_labels);
+    ctx.triggerEvent('append.elements',elems.field_pinned);
 
 }
 
@@ -78,17 +86,25 @@ function _initListeners(elems,ctx) {
             note.labels = val;
         }
     }
+    function handleChangePinned(e){
+        if(!e.isTrusted)return;
+        const val = elems.input_pinned.checked;
+        note.pinned = val;
+    }
     elems.input_title.addEventListener('input',handleChangeTitle);
     elems.input_labels.addEventListener('input',handleChangeLabels);
+    elems.input_pinned.addEventListener('input',handleChangePinned);
     
     ctx.addEventListener('destroy',function(){
         elems.input_title.removeEventListener('input',handleChangeTitle);
         elems.input_labels.removeEventListener('input',handleChangeLabels);
+        elems.input_pinned.removeEventListener('input',handleChangePinned);
     })
 }
 
 class NoteModal extends Modal {
     oldnote;
+    existnote;
     /**
      * @type {Note}
      */
@@ -98,20 +114,21 @@ class NoteModal extends Modal {
         const $this = this;
 
         if(note){
-            this.oldnote = note;
-            this.note = Note.copy(note);
+            this.existnote = note;
         }else{
-            this.note = Note.createNewFromObject({
+            note = Note.createNewFromObject({
                 title: Notebook.l10n('new_note_title'),
                 content: Notebook.l10n('new_note_content'),
             });
         }
+        this.oldnote = note;
+        this.note = Note.copy(note);
 
         this.settings.onbeforeclose = function(params) {
             // false if click from outside box
             // return !params?.fromOutside;
             // false (not closed) if _changed == true
-            if($this.note.changed){
+            if(Note.isChanged($this.note,$this.oldnote)){
                 return window.confirm(Notebook.l10n('notemodal.confirm.discardchange'));
             }
             return true;
@@ -146,7 +163,7 @@ class NoteModal extends Modal {
                 if(saved)modal.Close({forceclose:true});
                 else modal.ctx.triggerEvent('animate.shake');
             }
-            if(modal.oldnote){
+            if(modal.existnote){
                 appContext.triggerEvent('save.note',modal.note,callback);
             }else{
                 appContext.triggerEvent('add.note',modal.note,callback);

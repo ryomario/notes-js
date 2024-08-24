@@ -55,6 +55,7 @@ export default  {
         "notemodal.title.inputhint": "",
         "notemodal.labels.inputlabel": "Note Labels",
         "notemodal.labels.inputhint": "Separated by commas (,)",
+        "notemodal.pinned.inputlabel": "Pin Note?",
         "notemodal.confirm.discardchange": "Note not saved! Are you sure you want to discard the changes?",
         "new_note_title": "New Note",
         "new_note_content": "Write somethings!",

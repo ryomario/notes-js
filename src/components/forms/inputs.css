@@ -108,3 +108,65 @@
     text-overflow: ellipsis;
     overflow: hidden;
 }
+
+/* Toggle input */
+.input-field.input-toggle {
+    background-color: transparent;
+    box-shadow: none !important;
+    position: static;
+    cursor: default;
+    padding: 0.5em 0;
+}
+.input-field.input-toggle:not(.readonly):hover, 
+.input-field.input-toggle:not(.readonly):has(input:focus) {
+    color: var(--color-text-field-active);
+}
+.input-field.input-toggle input[type=checkbox] {
+    display: none;
+}
+.input-field.input-toggle::before {
+    display: none;
+}
+.input-field.input-toggle::after {
+    position: static;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: inherit !important;
+    opacity: 1 !important;
+    padding-left: 0.5em;
+}
+.input-field.input-toggle.readonly::after {
+    display: inline-block;
+}
+.input-field.input-toggle .toggle-preview {
+    position: relative;
+    display: inline-block;
+    width: 4em;
+    height: 2em;
+    vertical-align: middle;
+    background-color: #ddd;
+    transition: background-color 200ms;
+    box-shadow: inset 1px 1px 2px #0002;
+    border-radius: 2em;
+}
+.input-field.input-toggle .toggle-preview::after {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 1.6em;
+    height: 1.6em;
+    top: 0.2em;
+    left: 0.2em;
+    background-color: var(--color-primary-field-text);
+    box-shadow: 1px 1px 2px #0002;
+    border-radius: 2em;
+    transition: left 200ms;
+}
+.input-field.input-toggle.readonly.checked .toggle-preview,
+.input-field.input-toggle input[type=checkbox]:checked ~ .toggle-preview {
+    background-color: var(--color-primary-field);
+}
+.input-field.input-toggle.readonly.checked .toggle-preview::after,
+.input-field.input-toggle input[type=checkbox]:checked ~ .toggle-preview::after {
+    left: 2.2em;
+}
