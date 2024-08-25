@@ -30,21 +30,19 @@ export default class NotesContext extends BaseContext {
 
         ctx.addEventListener('load.notes',function(){
             ctx.triggerEvent('before.load.notes');
-            ctx._db.getAllData(ctx);
-        });
-        ctx.addEventListener('notesdb.loaded.note',function(data,next){
-            const note = Note.createFromObject(data);
-            note._ctx.addEventListener('open.note',function(){
-                ctx.triggerEvent('open.note',this);
+            NotesDB.getAllNotes(note => {
+                ctx.triggerEvent('notesdb.loaded.note',note);
+            }).then(allNotes => {
+                ctx.triggerEvent('notesdb.loaded.allnotes',allNotes);
             });
+        });
+        ctx.addEventListener('notesdb.loaded.note',function(data){
+            const note = Note.createFromObject(data);
             ctx.triggerEvent('loaded.note',note);
-            next();
         }); 
         ctx.addEventListener('notesdb.loaded.allnotes',function(notes){
             console.log('loaded all notes',Object.keys(notes).length);
         });
-
-        this._db = new NotesDB(ctx);
     }
     getSorter() {
         return Note.getSorterBy(this.getOption('sort.pinnedOnTop'),this.getOption('sort.columns'));

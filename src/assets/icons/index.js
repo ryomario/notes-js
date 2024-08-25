@@ -15,6 +15,8 @@ import point from "./point";
 import layoutGrid from "./layout-grid";
 import layoutList from "./layout-list";
 import sort from "./sort";
+import maximize from "./maximize";
+import minimize from "./minimize";
 
 /**
  * 
@@ -68,6 +70,12 @@ export default function iconElement(name) {
             break;
         case 'sort':
             container.innerHTML = sort;
+            break;
+        case 'maximize':
+            container.innerHTML = maximize;
+            break;
+        case 'minimize':
+            container.innerHTML = minimize;
             break;
         default:
             container.innerHTML = point;

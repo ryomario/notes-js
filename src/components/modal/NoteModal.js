@@ -5,7 +5,7 @@ import Notebook from "@/notebook";
 import "./note-modal.css";
 import ModalContext from "@/contexts/ModalContext";
 import dom from "@/utils/dom";
-import { InputField, InputLabels, InputText, InputToggle } from "../forms/inputs";
+import { InputLabels, InputNoteEditor, InputText, InputToggle } from "../forms/inputs";
 
 /**
  * 
@@ -19,47 +19,78 @@ function _init(ctx) {
 
     const readonly = !ctx.getObject().settings.editable;
 
-    const {container: field_title, input: input_title} = InputText({
+    const {container: field_title, setOnChange: setOnChangeTitle} = InputText({
         label: Notebook.l10n('notemodal.title.inputlabel'),
         value: note.title,
         inputname: 'input-title',
         hint: readonly?'':Notebook.l10n('notemodal.title.inputhint'),
         readonly,
     });
-    const {container: field_labels, input: input_labels} = InputLabels({
+    const {container: field_labels, setOnChange: setOnChangeLabels} = InputLabels({
         label: Notebook.l10n('notemodal.labels.inputlabel'),
         value: note.labels.join(','),
         inputname: 'input-labels',
         hint: readonly?'':Notebook.l10n('notemodal.labels.inputhint'),
         readonly,
     });
-    const {container: field_pinned, input: input_pinned} = InputToggle({
+    const {container: field_pinned, setOnChange: setOnChangePinned} = InputToggle({
         label: Notebook.l10n('notemodal.pinned.inputlabel'),
         value: note.pinned,
         inputname: 'input-pinned',
         readonly,
     });
+    const {container: field_content, setOnChange: setOnChangeContent} = InputNoteEditor({
+        label: Notebook.l10n('notemodal.content.inputlabel'),
+        value: note.content,
+        inputname: 'input-content',
+        readonly,
+    });
     const elems = {
         field_title,
-        input_title,
         field_labels,
-        input_labels,
         field_pinned,
-        input_pinned,
+        field_content,
     };
 
-
-    _initListeners(elems,ctx);
-
-    elems.field_title.setAttribute('label',Notebook.l10n('notemodal.title.inputlabel'));
-    elems.input_title.setAttribute('placeholder',Notebook.l10n('notemodal.title.inputlabel'));
-
-    elems.input_title.value = note.title;
-
+    /**
+     * Attach elements
+     */
     ctx.triggerEvent('append.elements',elems.field_title);
     if((readonly && note.labels.length > 0) || !readonly)ctx.triggerEvent('append.elements',elems.field_labels);
     ctx.triggerEvent('append.elements',elems.field_pinned);
+    ctx.triggerEvent('append.elements',elems.field_content);
 
+    /**
+     * Set listeners
+     */
+    setOnChangeTitle(function(e,input){
+        if(!e.isTrusted)return;
+        const val = input.value.trim();
+        if(val){
+            note.title = val;
+        }
+    });
+    setOnChangeLabels(function(e,input){
+        if(!e.isTrusted)return; // TODO, cannot triggered programmatically
+        const val = input.value.trim();
+        if(val){
+            note.labels = val;
+        }
+    });
+    setOnChangePinned(function(e,input){
+        if(!e.isTrusted)return;
+        const val = input.checked;
+        note.pinned = val;
+    });
+    setOnChangeContent(function(content){
+        note.content = content;
+    });
+    
+    ctx.addEventListener('destroy',function(){
+        setOnChangeTitle(null);
+        setOnChangeLabels(null);
+        setOnChangePinned(null);
+    });
 }
 
 /**
@@ -72,34 +103,7 @@ function _initListeners(elems,ctx) {
      * @type {Note}
      */
     const note = ctx.getObject().note;
-    function handleChangeTitle(e){
-        if(!e.isTrusted)return;
-        const val = elems.input_title.value.trim();
-        if(val){
-            note.title = val;
-        }
-    }
-    function handleChangeLabels(e){
-        // if(!e.isTrusted)return; // TODO, cannot triggered programmatically
-        const val = elems.input_labels.value.trim();
-        if(val){
-            note.labels = val;
-        }
-    }
-    function handleChangePinned(e){
-        if(!e.isTrusted)return;
-        const val = elems.input_pinned.checked;
-        note.pinned = val;
-    }
-    elems.input_title.addEventListener('input',handleChangeTitle);
-    elems.input_labels.addEventListener('input',handleChangeLabels);
-    elems.input_pinned.addEventListener('input',handleChangePinned);
-    
-    ctx.addEventListener('destroy',function(){
-        elems.input_title.removeEventListener('input',handleChangeTitle);
-        elems.input_labels.removeEventListener('input',handleChangeLabels);
-        elems.input_pinned.removeEventListener('input',handleChangePinned);
-    })
+
 }
 
 class NoteModal extends Modal {
@@ -151,6 +155,7 @@ class NoteModal extends Modal {
             size: 'lg',
             btnOK: editable?appContext.translate('notemodal.btntext.save'):null,
             editable,
+            showToggleFullscreen: true,
         });
 
         modal.ctx.addEventListener('close',function(){

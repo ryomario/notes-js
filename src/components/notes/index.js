@@ -23,6 +23,11 @@ function _init(ctx) {
         return container;
     }
 
+    ctx.setEventListener('changed.note',function(note) {
+        note._ctx.triggerEvent('change.note');
+        const noteHere = cacheNotes.find(cache => cache.id == note.id);
+        if(noteHere)noteHere._ctx.triggerEvent('change.note');
+    });
     ctx.setEventListener('toggle.grid',function(isGrid) {
         ctx.setOption('gridView',isGrid);
         ctx.triggerEvent('destroy.view.notes');
@@ -46,6 +51,9 @@ function _init(ctx) {
     });
 
     ctx.setEventListener('loaded.note',function(note){
+        note._ctx.addEventListener('open.note',function(){
+            ctx.triggerEvent('open.note',this);
+        });
         ctx.triggerEvent('filter',note,function(isPass){
             if(isPass){
                 cacheNotes.push(note);
@@ -86,7 +94,7 @@ function _init(ctx) {
 
 class Notes {
     ctx;
-    constructor(appContext, callbacks, options) {
+    constructor(appContext, callbacks, options, cache = true) {
         const defaultOptions = {
             gridView: true,
         };
@@ -107,12 +115,25 @@ class Notes {
         };
 
         this.ctx.initialize();
+
+        if(cache){
+            Notes.cache.push(this);
+            this.ctx.addEventListener('destroy',() => {
+                const inside = Notes.cache.findIndex(this);
+                if(inside != -1){
+                    Notes.cache.splice(inside,1);
+                }
+            });
+        }
     }
     toggleGrid(isGrid) {
         this.ctx.triggerEvent('toggle.grid',isGrid);
     }
     getContainer() {
         return this.ctx.getContainer();
+    }
+    Destroy() {
+        this.ctx.triggerEvent('destroy');
     }
     /**
      * 
@@ -129,6 +150,16 @@ class Notes {
         },options);
 
         return notes;
+    }
+
+    /**
+     * @type {Array<Notes>}
+     */
+    static cache = [];
+    static triggerEvent() {
+        for (const notes of Notes.cache) {
+            notes.ctx.triggerEvent(...arguments);
+        }
     }
 }
 

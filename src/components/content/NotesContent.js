@@ -63,6 +63,7 @@ class NotesContent extends Content {
     }
 
     show() {
+        this.notes.ctx.triggerEvent('load.notes');
         super.show();
         this.updateTools();
     }

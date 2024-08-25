@@ -53,7 +53,7 @@ function copyObject(obj,deep=1) {
     if(!obj)return;
     if(typeof deep === 'boolean')deep = deep?1:0;
     if(deep >= 10)return obj;
-    if(obj instanceof HTMLElement)return obj;
+    if(typeof obj !== 'object' || obj instanceof HTMLElement)return obj;
     const newObj = Array.isArray(obj)?[]:{};
     for (const key in obj) {
         let copiedValue = obj[key];

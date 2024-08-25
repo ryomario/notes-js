@@ -3,6 +3,7 @@ import dom from "@/utils/dom";
 import func from "@/utils/func";
 import "./modal.css";
 import iconElement from "@/assets/icons";
+import Notebook from "@/notebook";
 
 /**
  * @param {ModalContext} ctx
@@ -15,6 +16,7 @@ function _init(ctx) {
 
         header: dom.createNode('div','modal-header'),
         title: dom.createNode('div','modal-title'),
+        fullscreenBtn: dom.createNode('div','fullscreen-btn'),
         closeBtn: dom.createNode('div','close-btn'),
 
         content: dom.createNode('div','modal-content'),
@@ -30,6 +32,49 @@ function _init(ctx) {
     });
     ctx.addEventListener('append.elements',function(...nodes) {
         elems.content.append(...nodes);
+    });
+    function handleOnChangeFullscreen(e) {
+        if(document.fullscreenElement){
+            // entering fullscreen
+        }else{
+            ctx.triggerEvent('exit.fullscreen');
+        }
+    }
+    ctx.addEventListener('beforeenter.fullscreen',function() {
+        elems.container.classList.add('fullscreen');
+        elems.fullscreenBtn.innerHTML = '';
+        elems.fullscreenBtn.append(iconElement('minimize'));
+
+        document.addEventListener('fullscreenchange',handleOnChangeFullscreen);
+    });
+    ctx.addEventListener('exit.fullscreen',function() {
+        elems.container.classList.remove('fullscreen');
+        elems.fullscreenBtn.innerHTML = '';
+        elems.fullscreenBtn.append(iconElement('maximize'));
+
+        document.removeEventListener('fullscreenchange',handleOnChangeFullscreen);
+    });
+    ctx.setEventListener('toggle.fullscreen',function(){
+        if(document.fullscreenEnabled) {
+
+            if(document.fullscreenElement){
+                // will exit fullscreen
+                document.exitFullscreen();
+            }else{
+                // will enter fullscreen
+                ctx.triggerEvent('beforeenter.fullscreen');
+
+                if (elems.container.requestFullscreen) {
+                    elems.container.requestFullscreen();
+                } else if (elems.container.webkitRequestFullscreen) { /* Safari */
+                    elems.container.webkitRequestFullscreen();
+                } else if (elems.container.msRequestFullscreen) { /* IE11 */
+                    elems.container.msRequestFullscreen();
+                }
+            }
+        } else {
+            alert(Notebook.l10n('fullscreen.not.supported'));
+        }
     });
 
     _attachElements(ctx, elems);
@@ -61,6 +106,11 @@ function _attachElements(ctx,elems) {
     if(!app.settings.onlyBox){
         elems.box.appendChild(elems.header);
         elems.header.appendChild(elems.title);
+        if(app.settings.showToggleFullscreen){
+            elems.header.appendChild(elems.fullscreenBtn);
+            elems.fullscreenBtn.append(iconElement('maximize'));
+            elems.fullscreenBtn.setAttribute('title',Notebook.l10n('toggle_fullscreen'));
+        }
         elems.header.appendChild(elems.closeBtn);
         elems.closeBtn.append(iconElement('x'));
     }
@@ -81,9 +131,7 @@ function _attachElements(ctx,elems) {
 
     function HandleMainClick(e) {
         if(!e.isTrusted)return;
-        let node = e.target;
-        while(node && node !== elems.box)node = node.parentNode;
-        if(node !== elems.box){
+        if(e.target === elems.container){
             // click outside modal box
             app.Close({fromOutside: true, container: elems.container});
         }
@@ -96,10 +144,15 @@ function _attachElements(ctx,elems) {
         if(!e.isTrusted)return;
         ctx.triggerEvent('click.ok');
     }
+    function HandleClickFullscreen(e) {
+        if(!e.isTrusted)return;
+        ctx.triggerEvent('toggle.fullscreen');
+    }
     elems.container.addEventListener('click', HandleMainClick);
     if(!app.settings.onlyBox){
         elems.closeBtn.addEventListener('click', HandleClickClose);
         elems.btnOK.addEventListener('click', HandleClickOK);
+        elems.fullscreenBtn.addEventListener('click', HandleClickFullscreen);
     }
     
     ctx.addEventListener('destroy', function() {
@@ -107,6 +160,7 @@ function _attachElements(ctx,elems) {
         if(!app.settings.onlyBox){
             elems.closeBtn.removeEventListener('click', HandleClickClose);
             elems.btnOK.removeEventListener('click', HandleClickOK);
+            elems.fullscreenBtn.removeEventListener('click', HandleClickFullscreen);
         }
     });
 }
@@ -149,6 +203,7 @@ Modal.defaultSettings = {
     align: '',
     onlyBox: false,
     btnOK: 'OK',
+    showToggleFullscreen: false,
 }
 
 export default Modal;

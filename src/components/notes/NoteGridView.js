@@ -5,6 +5,7 @@ import Notebook from "@/notebook";
 import iconElement from "@/assets/icons";
 import "./note-grid.css";
 import func from "@/utils/func";
+import NoteEditor from "../editor/NoteEditor";
 
 function _attachElements(elems) {
     elems.container.appendChild(elems.header);
@@ -14,7 +15,7 @@ function _attachElements(elems) {
     elems.header.appendChild(elems.label_pinned);
     elems.header.appendChild(elems.title);
     elems.header.appendChild(elems.tools);
-    elems.tools.appendChild(elems.btn_options)
+    elems.tools.appendChild(elems.btn_options);
 
     elems.content_container.appendChild(elems.content_labels);
     elems.content_container.appendChild(elems.content);
@@ -38,8 +39,12 @@ function _attachContents(elems, note) {
     elems.label_pinned.style.display = note.pinned ? '' : 'none';
     elems.title.textContent = note.title;
     elems.title.title = note.title;
-    if(note.ishtml)elems.content.innerHTML = note.content;
-    else elems.content.innerText = note.content;
+
+    const preview = new NoteEditor(elems.content,{
+        value: note.content,
+        readonly: true,
+    });
+
     elems.info.textContent = func.formatString(Notebook.l10n('updated_{1}'),note.getLastUpdated());
     while(elems.content_labels.firstChild)elems.content_labels.removeChild(elems.content_labels.lastChild);
     let labels = note.labels;
@@ -101,11 +106,18 @@ class NoteGridView {
 
         _attachContents(elems, note);
 
-        ctx.addEventListener('change.note', function() {
+        function onChangeNote() {
             _attachContents(elems, note);
-        });
-        ctx.addEventListener('sort.note', function(order) {
+        }
+        function onSortNote(order) {
             elems.container.style.order = order;
+        }
+        ctx.addEventListener('change.note', onChangeNote);
+        ctx.addEventListener('sort.note', onSortNote);
+        
+        ctx.addEventListener('destroy.view', function() {
+            ctx.removeEventListener('change.note', onChangeNote);
+            ctx.removeEventListener('sort.note', onSortNote);
         });
 
         ctx.addEventListener('destroy', function() {

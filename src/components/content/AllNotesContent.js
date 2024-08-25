@@ -18,11 +18,6 @@ class AllNotesContent extends NotesContent {
         this.notes = Notes.all(ctx,()=>true,this.settings);
         this.content = this.notes.getContainer();
     }
-
-    show() {
-        this.notes.ctx.triggerEvent('load.notes');
-        super.show();
-    }
 }
 
 export default AllNotesContent;

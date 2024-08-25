@@ -15,7 +15,7 @@ class AppContext extends BaseContext {
     currentMenu;
     setCurrentMenu(menuId) {
         this.currentMenu = func.hash(menuId);
-        this.setConfigName(CONFIG_NAMES.CURRENT_MENU, this.currentMenu);
+        this.getConfig().open_last_openned_menu && this.setConfigName(CONFIG_NAMES.CURRENT_MENU, this.currentMenu);
     }
     /**
      * 
@@ -27,7 +27,7 @@ class AppContext extends BaseContext {
         super($obj,options,false);
         const $this = this;
 
-        this.currentMenu = this.getConfigName(CONFIG_NAMES.CURRENT_MENU,this.options.defaultMenu);
+        this.currentMenu = this.getConfig().open_last_openned_menu ? this.getConfigName(CONFIG_NAMES.CURRENT_MENU,this.options.defaultMenu) : this.options.defaultMenu;
 
         this.options.callbacks.onConfigsChange = function(newValue) {
             console.log('config change',newValue);
@@ -43,6 +43,7 @@ class AppContext extends BaseContext {
     getConfig() {
         return {
             devmode: true,
+            open_last_openned_menu: false,
         };
     }
     getConfigName(name,defaultValue = '') {

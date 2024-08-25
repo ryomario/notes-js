@@ -69,7 +69,12 @@ class Note {
     }
 
     setAttribute(name,value) {
+        value = func.copyObject(value);
         switch(name){
+            case 'content':
+                if(typeof value === 'object'){
+                    value = JSON.stringify(value);
+                }
             case 'title':case 'pinned':case 'content':
                 if(this['_'+name] != value){
                     this['_'+name] = value;
@@ -89,11 +94,17 @@ class Note {
     }
     getAttribute(name) {
         switch(name){
+            case 'content':
+                try {
+                    const value = JSON.parse(this['_'+name]);
+                    return value;
+                }catch(error){}
             case 'id':case 'title':case 'pinned':case 'content':case 'changed':
                 return this['_'+name];
             case 'labels':
                 return this._labels?.split(',').map(label => label.trim()).filter(label => label) ?? [];
             case 'created_at':case 'updated_at':
+                return this['_'+name];
                 return new Date(this['_'+name]);
             default:
                 throw new Error('Attribute not found!');
@@ -184,7 +195,7 @@ class Note {
     }
     /**
      * Create new model instance from an object
-     * @param {{id,title,content,pinned,created_at,updated_at,labels}} obj 
+     * @param {Note.structure} obj 
      */
     assignFromObject(obj) {
         this._id = obj.id;
@@ -196,16 +207,26 @@ class Note {
         this._labels = obj.labels;
         return this;
     }
+    static structure = {
+        id:'',
+        title:'',
+        content:'',
+        pinned:false,
+        created_at:0,
+        updated_at:0,
+        labels:null
+    };
     /**
      * 
      * @param {Note} note 
      */
     static copy(note) {
-        return Note.createFromObject(note.toObject());
+        const clonedNote = Note.createFromObject(note.toObject());
+        return clonedNote;
     }
     /**
      * Create new model instance from an object
-     * @param {{id,title,content,pinned,created_at,updated_at,labels}} obj 
+     * @param {Note.structure} obj 
      */
     static createFromObject(obj) {
         const note = new Note(obj.title, obj.pinned);
@@ -235,7 +256,7 @@ class Note {
     }
     /**
      * Check validity from an object
-     * @param {{id,title,content,pinned,created_at,updated_at,labels}} obj 
+     * @param {Note.structure} obj 
      */
     static isValidObject(obj) {
         return (obj.id) &&
@@ -274,10 +295,9 @@ class Note {
     /**
      * @param {boolean} pinnedOnTop
      * @param {Object} columns
-     * @param {string} order asc | desc
      */
     static getSorterBy(pinnedOnTop = false,columns=null){
-        if(!columns || Object.keys(columns).length == 0)columns = {'updated_at':'asc'};
+        if(!columns || Object.keys(columns).length == 0)columns = {'updated_at':'desc'};
 
         /**
          * @param {Note} note1

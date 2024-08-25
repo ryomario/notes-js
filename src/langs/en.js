@@ -5,6 +5,7 @@ export default  {
         "topbar.label.setting": "Settings",
         "topbar.label.plus": "Add note",
 
+        "toggle_fullscreen": "Toggle Fullscreen",
         "modalconfig.title": "Configuration",
         "modalconfig.okbtn": "SAVE",
         "modalconfig.confirm.discardchange": "Are you sure you want to discard the changes?",
@@ -56,6 +57,7 @@ export default  {
         "notemodal.labels.inputlabel": "Note Labels",
         "notemodal.labels.inputhint": "Separated by commas (,)",
         "notemodal.pinned.inputlabel": "Pin Note?",
+        "notemodal.content.inputlabel": "Write somethings!",
         "notemodal.confirm.discardchange": "Note not saved! Are you sure you want to discard the changes?",
         "new_note_title": "New Note",
         "new_note_content": "Write somethings!",

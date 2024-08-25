@@ -8,6 +8,8 @@ import { createAside } from "./components/aside";
 import dom from "./utils/dom";
 import Content from "./components/content/Content";
 import NoteModal from "./components/modal/NoteModal";
+import NotesDB from "./db/notesDB";
+import Notes from "./components/notes";
 
 // for singleton object
 /**
@@ -52,13 +54,27 @@ function _init() {
     ctx.setEventListener('open.note',function(note){
         NoteModal.open(note, false, ctx);
     });
+    ctx.setEventListener('edit.note',function(note){
+        NoteModal.open(note, true, ctx);
+    });
     ctx.setEventListener('save.note',function(note,callback){
-        console.log('save note',note);
-        callback(true);
+        NotesDB.saveNote(note.toObject()).then((result) => {
+            callback(true);
+            Notes.triggerEvent('changed.note',note);
+            console.log('saved note');
+        }).catch(error => {
+            callback(false);
+        });
     });
     ctx.setEventListener('add.note',function(note,callback){
         console.log('add note',note);
-        callback(false);
+        NotesDB.saveNote(note.toObject()).then((result) => {
+            callback(true);
+            Notes.triggerEvent('loaded.note',note);
+            console.log('added note');
+        }).catch(error => {
+            callback(false);
+        });
     });
 }
 
