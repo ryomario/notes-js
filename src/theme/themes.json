@@ -1,0 +1,66 @@
+{
+    "light": {
+        "id": "THEME-1",
+        "name": "Light",
+        "font": "Arial",
+        "colors": {
+            "body": "#fcf8f3",
+            "text": "#000000",
+            "body_accent": "#fae8d1",
+            "text_accent": "#000000",
+            "header": {
+                "background": "#dca47c",
+                "text": "#ffffff",
+                "accent": "#7e5f4a"
+            },
+            "card": {
+                "background": "#ffe6c8",
+                "text": "#000000"
+            },
+            "button": {
+                "background": "#698474",
+                "text": "#ffffff"
+            },
+            "field": {
+                "background": "#fcf8f3",
+                "text": "#000000"
+            },
+            "modal": {
+                "background": "#fcf8f3",
+                "text": "#000000"
+            }
+        }
+    },
+    "dark": {
+        "id": "THEME-2",
+        "name": "Dark",
+        "font": "Arial",
+        "colors": {
+            "body": "#0c0803",
+            "text": "#ffffff",
+            "body_accent": "#35230e",
+            "text_accent": "#ffffff",
+            "header": {
+                "background": "#854c23",
+                "text": "#ffffff",
+                "accent": "#7e5f4a"
+            },
+            "card": {
+                "background": "#ffe6c8",
+                "text": "#000000"
+            },
+            "button": {
+                "background": "#718e7d",
+                "text": "#ffffff"
+            },
+            "field": {
+                "background": "#fcf8f3",
+                "text": "#000000"
+            },
+            "modal": {
+                "background": "#0c0803",
+                "text": "#ffffff"
+            }
+        }
+    }
+}

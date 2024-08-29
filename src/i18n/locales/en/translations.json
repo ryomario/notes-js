@@ -1,0 +1,8 @@
+{
+    "appname": "NotesJS",
+    "settings": "Settings",
+    "new_note": "New Note",
+    "search_label": "Search Note",
+    "search_label_ctrl_k": "CTRL+K",
+    "modal_settings_title": "Settings"
+}
