@@ -14,7 +14,8 @@
                 "accent": "#7e5f4a"
             },
             "card": {
-                "background": "#ffe6c8",
+                "accent": "#ffe6c8",
+                "background": "#fcf8f3",
                 "text": "#000000"
             },
             "button": {

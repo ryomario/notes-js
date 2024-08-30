@@ -4,5 +4,7 @@
     "new_note": "New Note",
     "search_label": "Search Note",
     "search_label_ctrl_k": "CTRL+K",
-    "modal_settings_title": "Settings"
+    "modal_settings_title": "Settings",
+    "all_notes_label": "All Notes",
+    "pinned_notes_label": "Pinned Notes"
 }
