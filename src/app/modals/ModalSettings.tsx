@@ -2,7 +2,8 @@ import { useContext } from "react";
 import { ModalManagerContext } from "../../context/ModalManagerContext";
 import Modal from "../../components/Modal";
 import { useTranslation } from "react-i18next";
-import ThemeSelector from "../inputs/ThemeSelector";
+import ThemeSelector from "./inputs/ThemeSelector";
+import ToggleSaveState from "./inputs/ToggleSaveState";
 
 export const MODAL_ID = 'modal-settings'
 function ModalSettings() {
@@ -11,6 +12,7 @@ function ModalSettings() {
 
     return (
         <Modal open={isOpen(MODAL_ID)} onClose={closeModal} title={t('modal_settings_title')} size="md">
+            <ToggleSaveState/>
             <ThemeSelector/>
         </Modal>
     )

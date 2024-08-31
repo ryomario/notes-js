@@ -6,5 +6,10 @@
     "search_label_ctrl_k": "CTRL+K",
     "modal_settings_title": "Settings",
     "all_notes_label": "All Notes",
-    "pinned_notes_label": "Pinned Notes"
+    "pinned_notes_label": "Pinned Notes",
+    "content_allnotes_title": "All Notes",
+    "content_pinnednotes_title": "Pinned Notes",
+    "content_tools_changelist": "Change List-View",
+    "content_tools_changegrid": "Change Grid-View",
+    "settings_save_last_state_label": "Save last state?"
 }

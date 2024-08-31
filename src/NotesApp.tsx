@@ -2,14 +2,36 @@ import Header from './app/Header'
 import { createGlobalStyle } from 'styled-components'
 import CardMenus, { MenuType } from './app/Aside/CardMenus'
 import { useTranslation } from 'react-i18next'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import AllNotesContent from './app/contents/AllNotesContent'
+import PinnedNotesContent from './app/contents/PinnedNotesContent'
+import Preferences from './store/Preferences'
 
 function NotesApp() {
   const { t } = useTranslation()
-  const [menuId, setMenuId] = useState('all-notes')
+  const [menuId, setMenuId] = useState('')
   function openMenu(id: string) {
+    if(!id)id = 'all-notes'
     if(menuId != id)setMenuId(id)
   }
+  useEffect(() => {
+    Preferences.get('save-last-state',(isSave: boolean) => {
+      if(isSave){
+        Preferences.get('last-opened-menu',(_menuId: string) => {
+          if(_menuId)openMenu(_menuId)
+        })
+      }else openMenu('all-notes')
+    })
+  },[])
+  useEffect(() => {
+    Preferences.get('save-last-state',(isSave: boolean) => {
+      if(isSave && menuId != ''){
+        Preferences.set('last-opened-menu',menuId,() => {
+          console.log('saved menu id', menuId)
+        })
+      }
+    })
+  },[menuId])
   return (
     <>
       <GlobalStyles/>
@@ -31,11 +53,8 @@ function NotesApp() {
           }}/>
         </aside>
         <div id="content">
-          start
-          <div style={{ height: '200vh'}}></div>
-          mid
-          <div style={{ height: '200vh'}}></div>
-          end
+          <AllNotesContent open={menuId == 'all-notes'}/>
+          <PinnedNotesContent open={menuId == 'pinned-notes'}/>
         </div>
       </main>
     </>

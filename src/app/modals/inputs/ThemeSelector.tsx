@@ -1,5 +1,5 @@
-import { getTheme, useTheme } from "../../theme"
-import ThemeCard from "../../components/Theme/ThemeCard"
+import { getTheme, useTheme } from "../../../theme"
+import ThemeCard from "../../../components/Theme/ThemeCard"
 import styled from "styled-components"
 
 function ThemeSelector() {
