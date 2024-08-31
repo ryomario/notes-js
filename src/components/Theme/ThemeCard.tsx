@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import styled, { ThemeProvider } from "styled-components"
 import { getTheme } from "../../theme"
+import { StyledCardList, StyledItem } from "../../app/Aside/CardMenus"
 
 type ThemeCardProps = {
     themeId: string,
@@ -29,6 +30,15 @@ function ThemeCard({ themeId, active, onClick }:Readonly<ThemeCardProps>) {
                         <span className="text" style={{ width: '5em' }}/>
                         <span className="text" style={{ width: '1em' }}/>
                     </header>
+                    <main>
+                        <aside>
+                            <StyledCardList>
+                                <StyledItem className="active"><span className="text" style={{ width: '2em' }}/></StyledItem>
+                                <StyledItem><span className="text" style={{ width: '5em' }}/></StyledItem>
+                                <StyledItem><span className="text"/></StyledItem>
+                            </StyledCardList>
+                        </aside>
+                    </main>
                 </StyledPreview>
             </StyledThemeCard>
         </ThemeProvider>
@@ -47,6 +57,7 @@ const StyledThemeCard = styled.button`
     cursor: pointer;
     &::after {
         display: block;
+        font-family: '${({ theme }) => theme?.font}', sans-serif;
         content: '${({ theme }) => theme?.name ?? '...'}';
         padding: 0.5em 1em;
         text-align: center;
@@ -59,6 +70,7 @@ const StyledThemeCard = styled.button`
 `
 
 const StyledPreview = styled.div`
+    pointer-events: none;
     font-size: 0.5em;
     width: 100%;
     background-color: ${({ theme }) => theme?.colors?.body};
@@ -85,6 +97,10 @@ const StyledPreview = styled.div`
         & .space {
             flex-grow: 1;
         }
+    }
+    & main {
+        display: flex;
+        padding: 0.5em;
     }
 `
 export default ThemeCard

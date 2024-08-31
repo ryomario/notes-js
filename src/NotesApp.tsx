@@ -1,7 +1,6 @@
-import Header from './App/Header'
+import Header from './app/Header'
 import { createGlobalStyle } from 'styled-components'
-import ModalManager from './App/ModalManager'
-import CardMenus, { MenuType } from './App/Aside/CardMenus'
+import CardMenus, { MenuType } from './app/Aside/CardMenus'
 import { useTranslation } from 'react-i18next'
 import { useState } from 'react'
 
@@ -39,7 +38,6 @@ function NotesApp() {
           end
         </div>
       </main>
-      <ModalManager/>
     </>
   )
 }
@@ -52,6 +50,9 @@ const GlobalStyles = createGlobalStyle`
 }
 body {
   margin: 0;
+}
+button {
+  font-family: inherit;
 }
 #app {
   display: flex;

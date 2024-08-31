@@ -57,6 +57,9 @@ const StyledButtonText = styled.button`
         text-wrap: nowrap;
     }
     @media (max-width: 768px) {
+        & {
+            padding: 0.25em;
+        }
         & .label {
             display: none;
         }

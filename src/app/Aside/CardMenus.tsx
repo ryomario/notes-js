@@ -24,13 +24,13 @@ function CardMenus({ menus, onClickMenu }: Readonly<CardMenusProps>) {
     )
 }
 
-const StyledCardList = styled(StyledCard)`
+export const StyledCardList = styled(StyledCard)`
     display: flex;
     flex-direction: column;
     overflow: hidden;
 `
 
-const StyledItem = styled.div`
+export const StyledItem = styled.div`
     display: flex;
     padding: 0.25em 0.5em;
     align-items: center;

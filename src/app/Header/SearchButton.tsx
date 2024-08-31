@@ -4,20 +4,13 @@ import styled from "styled-components"
 import IconSearch from "../../assets/icons/search.svg"
 
 type SearchButtonProps = {
-    size?: string,
     onClick: React.MouseEventHandler<HTMLButtonElement>
 }
 
-function SearchButton({ size, onClick }: Readonly<SearchButtonProps>): React.ReactElement<SearchButtonProps> {
+function SearchButton({ onClick }: Readonly<SearchButtonProps>): React.ReactElement<SearchButtonProps> {
     const { t } = useTranslation()
-    const fontSize: string = ({
-        'sm': '',
-        'md': '1em',
-        'lg': '1.25em',
-        'xl': '1.5em'
-    })[size!] ?? ''
     return (
-        <ButtonStyled onClick={onClick} style={{fontSize}}>
+        <ButtonStyled onClick={onClick}>
             <span className="icon"><IconSearch/></span>
             <span className="label">{t('search_label')}</span>
             <span className="label-shortcut">{t('search_label_ctrl_k')}</span>
@@ -26,6 +19,7 @@ function SearchButton({ size, onClick }: Readonly<SearchButtonProps>): React.Rea
 }
 
 const ButtonStyled = styled.button`
+    font-size: 1em;
     display: flex;
     align-items: center;
     box-sizing: border-box;

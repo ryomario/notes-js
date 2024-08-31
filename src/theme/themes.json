@@ -1,7 +1,7 @@
 {
     "light": {
         "id": "THEME-1",
-        "name": "Light",
+        "name": "Default Light",
         "font": "Arial",
         "colors": {
             "body": "#fcf8f3",
@@ -11,7 +11,7 @@
             "header": {
                 "background": "#dca47c",
                 "text": "#ffffff",
-                "accent": "#7e5f4a"
+                "accent": "#cf814a"
             },
             "card": {
                 "accent": "#ffe6c8",
@@ -34,21 +34,22 @@
     },
     "dark": {
         "id": "THEME-2",
-        "name": "Dark",
+        "name": "Default Dark",
         "font": "Arial",
         "colors": {
-            "body": "#0c0803",
+            "body": "#653a1b",
             "text": "#ffffff",
-            "body_accent": "#35230e",
+            "body_accent": "#804f2c",
             "text_accent": "#ffffff",
             "header": {
-                "background": "#854c23",
-                "text": "#ffffff",
-                "accent": "#7e5f4a"
+                "background": "#28170b",
+                "text": "#ffe6c8",
+                "accent": "#804f2c"
             },
             "card": {
-                "background": "#ffe6c8",
-                "text": "#000000"
+                "background": "#8d5125",
+                "text": "#ffffff",
+                "accent": "#b56830"
             },
             "button": {
                 "background": "#718e7d",
@@ -59,7 +60,7 @@
                 "text": "#000000"
             },
             "modal": {
-                "background": "#0c0803",
+                "background": "#28170b",
                 "text": "#ffffff"
             }
         }

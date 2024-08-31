@@ -1,6 +1,5 @@
 import Logo from '../../assets/icons/icon.svg'
 import styled from 'styled-components'
-import Button from '../../components/Button'
 import IconPlus from '../../assets/icons/plus.svg'
 import IconCog from '../../assets/icons/cog.svg'
 import { useTranslation } from 'react-i18next'
@@ -8,7 +7,8 @@ import SearchButton from './SearchButton'
 import Modal from '../../components/Modal'
 import { useContext } from 'react'
 import { ModalManagerContext } from '../../context/ModalManagerContext'
-import { MODAL_ID as SETTINGS_MODAL_ID } from '../modals/ModalSettings'
+import ModalSettings, { MODAL_ID as SETTINGS_MODAL_ID } from '../modals/ModalSettings'
+import ToolButton from './ToolButton'
 
 function Header(){
     const { t } = useTranslation()
@@ -32,24 +32,23 @@ function Header(){
                     <div className="app-name">{t('appname')}</div>
                 </Brand>
                 <div className="space"></div>
-                <SearchButton size='md'
+                <SearchButton
                     onClick={() => {
-                        console.log('onClick button search')
                         openModal('modal-search')
                     }}
                 />
-                <Button text={t('settings')} icon={<IconCog/>}  iconOnly={true} size='sm' wrap={false}
+                <ToolButton text={t('settings')} icon={<IconCog/>}  iconOnly={true} wrap={false}
                     onClick={() => {
                         openModal(SETTINGS_MODAL_ID)
                     }}
                 />
-                <Button text={t('new_note')} icon={<IconPlus/>}  iconOnly={false} size='sm' wrap={true}
+                <ToolButton text={t('new_note')} icon={<IconPlus/>}  iconOnly={false} wrap={true}
                     onClick={() => {
-                        console.log('onClick button ass')
                         openModal('modal-add-note')
                     }}
                 />
             </div>
+            <ModalSettings/>
             <Modal open={isOpen('modal-search')} title='Search' onClose={closeModal} supportFullscreen={true}/>
             <Modal open={isOpen('modal-add-note')} title='Modal title' onClose={closeModal} supportFullscreen={true}/>
         </StyledHeader>

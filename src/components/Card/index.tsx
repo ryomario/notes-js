@@ -15,7 +15,7 @@ function Card({ children, style }: Readonly<CardProps>) {
 
 export const StyledCard = styled.div`
     padding: 0;
-    border: 1px solid;
+    border: 1px solid #0007;
     border-radius: 0.5em;
     background-color: ${({ theme }) => theme?.colors?.card?.background};
     color: ${({ theme }) => theme?.colors?.card?.text};
