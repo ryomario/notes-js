@@ -13,6 +13,7 @@ function ModalSettings() {
     return (
         <Modal open={isOpen(MODAL_ID)} onClose={closeModal} title={t('modal_settings_title')} size="md">
             <ToggleSaveState/>
+            <br /><br />
             <ThemeSelector/>
         </Modal>
     )

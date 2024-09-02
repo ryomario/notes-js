@@ -21,8 +21,10 @@ function ToggleSaveState() {
             })
         }
     },[isSave])
+
+    const className = isSave ? 'checked' : ''
     return (
-        <StyledLabel className={isSave?'checked':''} onClick={toggleIsSave}>
+        <StyledLabel className={isSave == null ? 'disabled' :  className} onClick={toggleIsSave}>
             <span className="toggle"></span>
             <span className="label">{t('settings_save_last_state_label')}</span>
         </StyledLabel>
@@ -34,27 +36,30 @@ const StyledLabel = styled.label`
     &:not(.disabled) {
         cursor: pointer;
     }
+    &.disabled {
+        opacity: 0.5;
+    }
     & .toggle {
         box-sizing: border-box;
         display: inline-flex;
         font-size: 3em;
         width: 1em;
         height: 0.5em;
-        background-color: ${({ theme }) => theme?.colors?.field?.background};
+        background-color: #ccc;
         color: ${({ theme }) => theme?.colors?.field?.text};
-        border: 1px solid;
+        border: 1px solid #ccc;
         border-radius: 9999px;
         vertical-align: middle;
-        opacity: 0.5;
         transition: opacity 200ms;
     }
     & .toggle::before {
         content: '';
         display: block;
         height: 100%;
+        width: 0.5em;
         border-radius: 50%;
-        border-left: 0.5em solid;
-        margin-left: -1px;
+        box-shadow: 1px 1px 3px #0002;
+        background-color: ${({ theme }) => theme?.colors?.field?.background};
         transition: margin-left 200ms;
     }
     & .label {
@@ -62,7 +67,8 @@ const StyledLabel = styled.label`
         margin-left: 0.5em;
     }
     &.checked .toggle {
-        opacity: 1;
+        background-color: ${({ theme }) => theme?.colors?.field?.primary};
+        border-color: ${({ theme }) => theme?.colors?.field?.primary};
     }
     &.checked .toggle::before {
         margin-left: 0.5em;

@@ -24,21 +24,23 @@ function ThemeCard({ themeId, active, onClick }:Readonly<ThemeCardProps>) {
         <ThemeProvider theme={theme}>
             <StyledThemeCard className={active?'active':''} onClick={onClick}>
                 <StyledPreview>
-                    <header>
-                        <span className="text"/>
-                        <span className="space"/>
-                        <span className="text" style={{ width: '5em' }}/>
-                        <span className="text" style={{ width: '1em' }}/>
-                    </header>
-                    <main>
-                        <aside>
-                            <StyledCardList>
-                                <StyledItem className="active"><span className="text" style={{ width: '2em' }}/></StyledItem>
-                                <StyledItem><span className="text" style={{ width: '5em' }}/></StyledItem>
-                                <StyledItem><span className="text"/></StyledItem>
-                            </StyledCardList>
-                        </aside>
-                    </main>
+                    <div className="body">
+                        <header>
+                            <span className="text"/>
+                            <span className="space"/>
+                            <span className="text" style={{ width: '5em' }}/>
+                            <span className="text" style={{ width: '1em' }}/>
+                        </header>
+                        <main>
+                            <aside>
+                                <StyledCardList>
+                                    <StyledItem className="active"><span className="text" style={{ width: '2em' }}/></StyledItem>
+                                    <StyledItem><span className="text" style={{ width: '5em' }}/></StyledItem>
+                                    <StyledItem><span className="text"/></StyledItem>
+                                </StyledCardList>
+                            </aside>
+                        </main>
+                    </div>
                 </StyledPreview>
             </StyledThemeCard>
         </ThemeProvider>
@@ -64,21 +66,29 @@ const StyledThemeCard = styled.button`
     }
     &.active {
         border-width: 2px;
-        border-color: #000;
+        border-color: #f00;
         color: #000;
     }
 `
 
 const StyledPreview = styled.div`
+    margin-top: -2px;
     pointer-events: none;
     font-size: 0.5em;
     width: 100%;
     background-color: ${({ theme }) => theme?.colors?.body};
     color: ${({ theme }) => theme?.colors?.text};
-    display: flex;
-    flex-direction: column;
     padding-bottom: 50%;
     position: relative;
+    & .body {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        display: flex;
+        flex-direction: column;
+    }
     & .text {
         display: inline-block;
         width: 3em;

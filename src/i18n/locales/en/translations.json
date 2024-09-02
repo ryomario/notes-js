@@ -11,5 +11,6 @@
     "content_pinnednotes_title": "Pinned Notes",
     "content_tools_changelist": "Change List-View",
     "content_tools_changegrid": "Change Grid-View",
-    "settings_save_last_state_label": "Save last state?"
+    "settings_save_last_state_label": "Save last state?",
+    "settings_theme_selector_label": "Select a Theme"
 }
