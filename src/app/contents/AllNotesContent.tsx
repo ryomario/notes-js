@@ -1,13 +1,13 @@
 import { useTranslation } from "react-i18next"
 import Button from "../../components/Button"
 import Content, { ContentProps } from "./Content"
-import { useState } from "react"
 import IconGrid from "../../assets/icons/layout-grid.svg"
 import IconList from "../../assets/icons/layout-list.svg"
+import { useSavedState } from "../../store/Preferences"
 
 function AllNotesContent({ open }: Readonly<ContentProps>) {
     const { t } = useTranslation()
-    const [isGrid, setIsGrid] = useState(true)
+    const {state:isGrid, setState:setIsGrid} = useSavedState<boolean>('last-isgrid-content-allnotes',true)
     const toggleGrid = () => {
         setIsGrid(old => !old)
     }

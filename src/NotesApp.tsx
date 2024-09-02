@@ -2,36 +2,17 @@ import Header from './app/Header'
 import { createGlobalStyle } from 'styled-components'
 import CardMenus, { MenuType } from './app/Aside/CardMenus'
 import { useTranslation } from 'react-i18next'
-import { useEffect, useState } from 'react'
 import AllNotesContent from './app/contents/AllNotesContent'
 import PinnedNotesContent from './app/contents/PinnedNotesContent'
-import Preferences from './store/Preferences'
+import { useSavedState } from './store/Preferences'
 
 function NotesApp() {
   const { t } = useTranslation()
-  const [menuId, setMenuId] = useState('')
+  const {state:menuId, setState:setMenuId} = useSavedState<string>('last-opened-menu','all-notes')
   function openMenu(id: string) {
     if(!id)id = 'all-notes'
     if(menuId != id)setMenuId(id)
   }
-  useEffect(() => {
-    Preferences.get('save-last-state',(isSave: boolean) => {
-      if(isSave){
-        Preferences.get('last-opened-menu',(_menuId: string) => {
-          if(_menuId)openMenu(_menuId)
-        })
-      }else openMenu('all-notes')
-    })
-  },[])
-  useEffect(() => {
-    Preferences.get('save-last-state',(isSave: boolean) => {
-      if(isSave && menuId != ''){
-        Preferences.set('last-opened-menu',menuId,() => {
-          console.log('saved menu id', menuId)
-        })
-      }
-    })
-  },[menuId])
   return (
     <>
       <GlobalStyles/>
