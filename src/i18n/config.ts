@@ -1,21 +1,34 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
+import translationEN from './locales/en/translations.json';
+import translationID from './locales/id/translations.json';
+import Preferences from "../store/Preferences";
+
+export const supportedLngs = ['en','id']
 
 i18n.use(initReactI18next).init({
     fallbackLng: 'en',
     lng: 'en',
+    supportedLngs,
     resources: {
         en: {
-            translations: await import('./locales/en/translations.json')
+            translations: translationEN
         },
         id: {
-            translations: await import('./locales/id/translations.json')
+            translations: translationID
         }
     },
     ns: ['translations'],
     defaultNS: 'translations'
 })
 
-i18n.languages = ['en','id']
+Preferences.get('lang',lang => {
+    if(lang)i18n.changeLanguage(lang)
+})
+i18n.on('languageChanged',lng => {
+    Preferences.set('lang',lng,() => {
+        console.log('language changed',lng)
+    })
+})
 
 export default i18n

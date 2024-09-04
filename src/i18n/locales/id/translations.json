@@ -1,5 +1,17 @@
 {
     "appname": "NotesJS",
     "settings": "Pengaturan",
-    "new_note": "Catatan Baru"
+    "new_note": "Catatan baru",
+    "search_label": "Cari catatan",
+    "search_label_ctrl_k": "CTRL+K",
+    "modal_settings_title": "Pengaturan",
+    "all_notes_label": "Semua Catatan",
+    "pinned_notes_label": "Catatan Disematkan",
+    "content_allnotes_title": "Semua Catatan",
+    "content_pinnednotes_title": "Catatan Disematkan",
+    "content_tools_changelist": "Tampilkan sebagai Daftar",
+    "content_tools_changegrid": "Tampilkan sebagai Grid",
+    "settings_save_last_state_label": "Simpan status akhir aplikasi?",
+    "settings_theme_selector_label": "Pilih tema!",
+    "select_language_label": "Pilih bahasa!"
 }
