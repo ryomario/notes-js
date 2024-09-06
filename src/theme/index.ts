@@ -16,6 +16,7 @@ export async function getTheme(themeId: string) {
 }
 export async function getLocalTheme() {
     const themeId = await DB.table('preferences').get<string>('theme')
+    if(!themeId)return null
     return await getTheme(themeId)
 }
 export async function saveLocalTheme(themeId: string) {
