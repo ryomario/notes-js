@@ -36,6 +36,9 @@ const StyledContentContainer = styled.div`
             }
         }
     }
+    & .content-footer {
+        margin-top: 1em;
+    }
 `
 
 export default Content

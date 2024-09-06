@@ -11,6 +11,7 @@ import Notes from "../../components/Notes"
 import NotesStore from "../../store/Notes"
 import Note, { NoteRaw } from "../../models/Note"
 import { FileJSONParse, importFile } from "../../utils/func"
+import Pagination from "../../components/Pagination"
 
 type NotesContentProps = ContentProps & {
     id: string,
@@ -25,32 +26,35 @@ function NotesContent({ open, title, id, filterAttr }: Readonly<NotesContentProp
         setIsGrid(old => !old)
     }
 
-    const [notes, setNotes] = useState<Array<Note>|null>(null)
+    const [loading, setLoading] = useState(true)
+    const [notes, setNotes] = useState<Array<Note>>([])
+    const [currPage, setCurrPage] = useState(1)
+    const [totalPage, setTotalPage] = useState(0)
+    const notesPerPage = 5
 
-    useEffect(() => {
-        NotesStore.getAll(note => {
-            // console.log(note)
-            // setNotes(oldNotes => {
-            //     if(!oldNotes)oldNotes = []
-            //     oldNotes.push(Note.createFromObject(note))
-            //     return oldNotes
-            // })
-            // trigerred twice 
-        },(allNotes) => {
-            // console.log('loaded all')
+    const HandlePagination = (page: number) => {
+        setCurrPage(page)
+    }
+
+    const loadNotes = () => {
+        setLoading(true)
+        NotesStore.getAllWithPagination(((currPage - 1) * notesPerPage),notesPerPage,(allNotes, _, __, _totalPage) => {
+            setTotalPage(_totalPage)
             const _notes: Array<Note> = []
             allNotes.forEach(note => {
-                let pass = true
-                if(filterAttr) {
-                    for (const key in filterAttr) {
-                        if((note as any)[key] != (filterAttr as any)[key])pass = false
-                    }
-                }
-                if(pass)_notes.push(Note.createFromObject(note))
+                _notes.push(Note.createFromObject(note))
             })
             setNotes(_notes)
-        })
+            setLoading(false)
+        },filterAttr)
+    }
+
+    useEffect(() => {
+        loadNotes()
     },[])
+    useEffect(() => {
+        loadNotes()
+    },[currPage])
 
     const handleClickImport = () => {
         importFile('application/json,text/*',{
@@ -94,7 +98,10 @@ function NotesContent({ open, title, id, filterAttr }: Readonly<NotesContentProp
                 </div>
             </div>
             <div className="content-notes">
-                {!notes?"Loading":<Notes isGrid={isGrid!} notes={notes!}/>}
+                {loading?"Loading...":<Notes isGrid={isGrid!} notes={notes}/>}
+            </div>
+            <div className="content-footer">
+                {totalPage > 1 && <Pagination loading={loading} currentPage={currPage} totalPage={totalPage} handlePagination={HandlePagination} maxPad={1}/>}
             </div>
         </Content>
     )

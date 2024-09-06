@@ -166,6 +166,27 @@ export default class DB {
                     }).catch(reject);
             });
         }
+        async function getAllWithCursor<Item>(onloadeditem?:(item:Item,cursor: IDBCursor)=>boolean): Promise<Map<any,Item>> {
+            return new Promise((resolve,reject) => {
+                $this.transaction(tablename, true)
+                    .then(store => {
+                        const request = store.openCursor();
+                        request.onerror = () => {
+                            throw request.error;
+                        }
+                        const allData: Map<any,Item> = new Map();
+                        request.onsuccess = function() {
+                            const cursor = request.result;
+                            if(cursor){
+                                const data = getObjectValue(cursor.value);
+                                if(onloadeditem?.(data,cursor))allData.set(<any>cursor.key,data);
+                            }else{
+                                resolve(allData);
+                            }
+                        }
+                    }).catch(reject);
+            });
+        }
         async function getAllKeys<Item>(): Promise<Array<Item>> {
             return new Promise((resolve,reject) => {
                 $this.transaction(tablename, true)
@@ -185,6 +206,51 @@ export default class DB {
                     }).catch(reject);
             });
         }
+        const count: Promise<number> = new Promise((resolve,reject) => {
+            $this.transaction(tablename, true)
+                .then(store => {
+                    const request = store.count();
+                    request.onerror = () => {
+                        throw request.error;
+                    }
+                    request.onsuccess = function() {
+                        const data = request.result;
+                        resolve(data);
+                    }
+                }).catch(reject);
+        });
+        async function getAllWithRange<Item>(start=0,length=5): Promise<Map<any,Item>> {
+            return new Promise((resolve,reject) => {
+                $this.transaction(tablename, true)
+                    .then(store => {
+                        const request = store.openCursor();
+                        request.onerror = () => {
+                            throw request.error;
+                        }
+                        let advanced = false;
+                        const allData: Map<any,Item> = new Map();
+                        request.onsuccess = function() {
+                            const cursor = request.result;
+                            if(cursor){
+                                if(!advanced && start > 0){
+                                    advanced = true;
+                                    cursor.advance(start);
+                                    return;
+                                }
+                                const data = getObjectValue(cursor.value);
+                                if(allData.size < length) {
+                                    allData.set(<any>cursor.key,data);
+                                    cursor.continue();
+                                }else{
+                                    resolve(allData);
+                                }
+                            }else{
+                                resolve(allData);
+                            }
+                        }
+                    }).catch(reject);
+            });
+        }
 
         return {
             get,
@@ -192,6 +258,9 @@ export default class DB {
             addIfNotExist,
             getAll,
             getAllKeys,
+            getAllWithRange,
+            getAllWithCursor,
+            count,
         };
     }
 

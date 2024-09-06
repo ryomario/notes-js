@@ -4,6 +4,41 @@ import Note, { NoteRaw } from "../models/Note";
 const TABLE = 'notes'
 
 export default class NotesStore {
+    static getAllWithPagination(start: number,length: number,onfinished:(allData: Map<any,NoteRaw>,start:number,count:number,totalPage:number) => void,filterAttr?: Partial<NoteRaw>) {
+        (async function(){
+            let counter = 0
+            let totalData = 0
+            const allData: Map<any,NoteRaw> = new Map()
+            let advanced = false
+            await DB.table(TABLE).getAllWithCursor<NoteRaw>((note, cursor): boolean => {
+                let pass = true
+                if(filterAttr) {
+                    for (const key in filterAttr) {
+                        if((note as any)[key] != (filterAttr as any)[key])pass = false
+                    }
+                }
+                if(!advanced && start <= counter){
+                    advanced = true; // just status
+                }
+                if(allData.size < length) {
+                    if(pass && advanced){
+                        allData.set(note.id,note)
+                    }
+                }else{
+                    console.log('done',start,length)
+                }
+                cursor.continue()
+               if(pass)counter++
+                return pass
+            }).then(_allData => {
+                totalData = _allData.size
+            })
+
+            const totalPage = Math.ceil(totalData / length) // round up
+            console.log('loaded',allData.size,'from total',totalData)
+            onfinished(allData, start, allData.size, totalPage)
+        })()
+    }
     static getAll(callback: (data: NoteRaw)=>void,onfinished:(allData: Map<any,NoteRaw>) => void) {
         DB.table(TABLE).getAll<NoteRaw>(callback).then(onfinished)
     }

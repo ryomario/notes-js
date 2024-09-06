@@ -15,8 +15,8 @@ function Notes({ isGrid, notes }:Readonly<NotesProps>) {
 }
 
 const StyledNotesContainer = styled.div`
-    display: flex;
-    flex-wrap: wrap;
+    // display: flex;
+    // flex-wrap: wrap;
     &, & *, & *::before, & *::after {
         box-sizing: border-box;
     }
