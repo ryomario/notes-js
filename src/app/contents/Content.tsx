@@ -31,6 +31,9 @@ const StyledContentContainer = styled.div`
         }
         & .content-tools {
             display: flex;
+            & > :not(:last-child) {
+                margin-right: 0.5em;
+            }
         }
     }
 `

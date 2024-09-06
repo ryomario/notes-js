@@ -8,9 +8,10 @@ type ButtonProps = {
     icon?: React.ReactNode,
     wrap?: boolean,
     onClick?: React.MouseEventHandler<HTMLButtonElement>,
+    disabled?: boolean,
 }
 
-function Button({text,iconOnly,size,icon,onClick,wrap}:Readonly<ButtonProps>): React.ReactElement<ButtonProps> {
+function Button({text,iconOnly,size,icon,onClick,wrap,disabled}:Readonly<ButtonProps>): React.ReactElement<ButtonProps> {
     const fontSize: string = ({
         'sm': '',
         'md': '1em',
@@ -18,7 +19,7 @@ function Button({text,iconOnly,size,icon,onClick,wrap}:Readonly<ButtonProps>): R
         'xl': '1.5em'
     })[size!] ?? ''
     return (
-        <StyledButtonText className={wrap?'wrap':''} style={{fontSize}} onClick={onClick} title={text}>
+        <StyledButtonText className={wrap?'wrap':''} style={{fontSize}} onClick={onClick} title={text} disabled={disabled}>
             {icon && <span className="icon">{icon}</span>}
             {(!iconOnly || !icon) && <span className="label">{text}</span>}
         </StyledButtonText>
@@ -36,6 +37,9 @@ const StyledButtonText = styled.button`
     align-items: center;
     opacity: 0.9;
     transition: background-color 200ms;
+    &:disabled, &.disabled {
+        opacity: 0.5;
+    }
     &:not(:disabled):hover {
         cursor: pointer;
         opacity: 1;

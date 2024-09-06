@@ -13,5 +13,7 @@
     "content_tools_changegrid": "Change Grid-View",
     "settings_save_last_state_label": "Save last state?",
     "settings_theme_selector_label": "Select a Theme!",
-    "select_language_label": "Select Language!"
+    "select_language_label": "Select Language!",
+    "content_tools_import": "Import",
+    "content_tools_export": "Export"
 }

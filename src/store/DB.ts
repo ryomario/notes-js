@@ -151,7 +151,7 @@ export default class DB {
                         request.onerror = () => {
                             throw request.error;
                         }
-                        const allData = <Map<any,Item>>{};
+                        const allData: Map<any,Item> = new Map();
                         request.onsuccess = function() {
                             const cursor = request.result;
                             if(cursor){

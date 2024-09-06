@@ -2,8 +2,7 @@ import Header from './app/Header'
 import { createGlobalStyle } from 'styled-components'
 import CardMenus, { MenuType } from './app/Aside/CardMenus'
 import { useTranslation } from 'react-i18next'
-import AllNotesContent from './app/contents/AllNotesContent'
-import PinnedNotesContent from './app/contents/PinnedNotesContent'
+import NotesContent from './app/contents/NotesContent'
 import { useSavedState } from './store/Preferences'
 
 function NotesApp() {
@@ -34,8 +33,8 @@ function NotesApp() {
           }}/>
         </aside>
         <div id="content">
-          <AllNotesContent open={menuId == 'all-notes'}/>
-          <PinnedNotesContent open={menuId == 'pinned-notes'}/>
+          <NotesContent open={menuId == 'all-notes'} title={t('content_allnotes_title')} id='allnotes'/>
+          <NotesContent open={menuId == 'pinned-notes'} title={t('content_pinnednotes_title')} id='pinnednotes' filterAttr={{ pinned: true }}/>
         </div>
       </main>
     </>
