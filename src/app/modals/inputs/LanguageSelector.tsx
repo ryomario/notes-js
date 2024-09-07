@@ -15,15 +15,17 @@ function LanguageSelector() {
         <div>
             {t('select_language_label')}&nbsp;
             <StyledSelect name="lang" value={language} onChange={onChange}>
-                {supportedLngs.map(lang => <option key={lang} value={lang}>{lang.toUpperCase()}</option>)}
+                {Object.keys(supportedLngs).map(lang => <option key={lang} value={lang}>{lang} - {(supportedLngs as any)[lang]}</option>)}
             </StyledSelect>
         </div>
     )
 }
 
 const StyledSelect = styled.select`
-    width: 150px;
     padding: 0.25em 0.5em;
+    border: 1px solid #aaa;
+    background-color: ${({ theme }) => theme?.colors?.field?.background};
+    color: ${({ theme }) => theme?.colors?.field?.text};
 `
 
 export default LanguageSelector

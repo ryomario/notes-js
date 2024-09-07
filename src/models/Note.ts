@@ -55,10 +55,6 @@ export default class Note {
     setAttribute(name: string,value: any) {
         value = copyObject(value);
         switch(name){
-            case 'content':
-                if(typeof value === 'object'){
-                    value = JSON.stringify(value);
-                }
             case 'title':case 'pinned':case 'content':
                 if((this as any)['_'+name] != value){
                     (this as any)['_'+name] = value;
@@ -80,17 +76,11 @@ export default class Note {
     }
     getAttribute(name: string) {
         switch(name){
-            case 'content':
-                try {
-                    const value = JSON.parse((this as any)['_'+name]);
-                    return value;
-                }catch(error){}
             case 'id':case 'title':case 'pinned':case 'content':case 'changed':
                 return (this as any)['_'+name];
             case 'labels':
                 return this._labels?.split(',').map(label => label.trim()).filter(label => label) ?? [];
             case 'created_at':case 'updated_at':
-                // return this['_'+name];
                 return new Date((this as any)['_'+name]);
             default:
                 throw new Error('Attribute not found!');

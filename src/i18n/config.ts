@@ -4,12 +4,15 @@ import translationEN from './locales/en/translations.json';
 import translationID from './locales/id/translations.json';
 import Preferences from "../store/Preferences";
 
-export const supportedLngs = ['en','id']
+export const supportedLngs = {
+    'en': 'English',
+    'id': 'Indonesian',
+}
 
 i18n.use(initReactI18next).init({
     fallbackLng: 'en',
     lng: 'en',
-    supportedLngs,
+    supportedLngs: Object.keys(supportedLngs),
     resources: {
         en: {
             translations: translationEN
