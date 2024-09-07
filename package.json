@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/crypto-js": "^4.2.2",
+    "crypto-js": "^4.2.0",
     "i18next": "^23.14.0",
     "randexp": "^0.5.3",
     "react": "^18.3.1",

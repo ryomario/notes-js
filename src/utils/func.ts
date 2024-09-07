@@ -1,4 +1,3 @@
-import RandExp, { randexp } from "randexp";
 import { useTranslation } from "react-i18next";
 
 export function copyObject(obj:any,deep=1) {

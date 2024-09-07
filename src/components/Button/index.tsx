@@ -9,17 +9,19 @@ type ButtonProps = {
     wrap?: boolean,
     onClick?: React.MouseEventHandler<HTMLButtonElement>,
     disabled?: boolean,
+    circle?: boolean,
 }
 
-function Button({text,iconOnly,size,icon,onClick,wrap,disabled}:Readonly<ButtonProps>): React.ReactElement<ButtonProps> {
+function Button({text,iconOnly,size,icon,onClick,wrap,disabled,circle}:Readonly<ButtonProps>): React.ReactElement<ButtonProps> {
     const fontSize: string = ({
         'sm': '',
         'md': '1em',
         'lg': '1.25em',
         'xl': '1.5em'
     })[size!] ?? ''
+    const className: string = `${wrap?'wrap':''} ${circle?'circle':''}`
     return (
-        <StyledButtonText className={wrap?'wrap':''} style={{fontSize}} onClick={onClick} title={text} disabled={disabled}>
+        <StyledButtonText className={className} style={{fontSize}} onClick={onClick} title={text} disabled={disabled}>
             {icon && <span className="icon">{icon}</span>}
             {(!iconOnly || !icon) && <span className="label">{text}</span>}
         </StyledButtonText>
@@ -37,6 +39,10 @@ const StyledButtonText = styled.button`
     align-items: center;
     opacity: 0.9;
     transition: background-color 200ms;
+    &.circle {
+        border-radius: 50%;
+        padding: 0.25em;
+    }
     &:disabled, &.disabled {
         opacity: 0.5;
     }

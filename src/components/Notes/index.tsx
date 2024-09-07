@@ -1,22 +1,23 @@
 import styled from "styled-components"
-import Note from "../../models/Note"
+import NoteModel from "../../models/Note"
+import Note from "./Note"
 
 export type NotesProps = {
     isGrid: boolean,
-    notes: Array<Note>,
+    notes: Array<NoteModel>,
 }
 
 function Notes({ isGrid, notes }:Readonly<NotesProps>) {
     return (
         <StyledNotesContainer className={isGrid ? '' : 'card'}>
-            {notes.map(note => <div key={note.id}>{note.title}</div>)}
+            {notes.map(note => <Note key={note.id} isGrid={isGrid} note={note}/>)}
         </StyledNotesContainer>
     )
 }
 
 const StyledNotesContainer = styled.div`
-    // display: flex;
-    // flex-wrap: wrap;
+    display: flex;
+    flex-wrap: wrap;
     &, & *, & *::before, & *::after {
         box-sizing: border-box;
     }
