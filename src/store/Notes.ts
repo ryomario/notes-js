@@ -25,7 +25,7 @@ export default class NotesStore {
                         allData.set(note.id,note)
                     }
                 }else{
-                    console.log('done',start,length)
+                    // console.log('done',start,length)
                 }
                 cursor.continue()
                if(pass)counter++
@@ -35,7 +35,7 @@ export default class NotesStore {
             })
 
             const totalPage = Math.ceil(totalData / length) // round up
-            console.log('loaded',allData.size,'from total',totalData)
+            // console.log('loaded',allData.size,'from total',totalData)
             onfinished(allData, start, allData.size, totalPage)
         })()
     }

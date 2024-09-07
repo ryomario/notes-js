@@ -26,7 +26,7 @@ function NotesContent({ open, title, id, filterAttr }: Readonly<NotesContentProp
         setIsGrid(old => !old)
     }
 
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
     const [notes, setNotes] = useState<Array<Note>>([])
     const [currPage, setCurrPage] = useState(1)
     const [totalPage, setTotalPage] = useState(0)
@@ -37,6 +37,7 @@ function NotesContent({ open, title, id, filterAttr }: Readonly<NotesContentProp
     }
 
     const loadNotes = () => {
+        if(loading)return
         setLoading(true)
         NotesStore.getAllWithPagination(((currPage - 1) * notesPerPage),notesPerPage,(allNotes, _, __, _totalPage) => {
             setTotalPage(_totalPage)
