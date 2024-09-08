@@ -10,11 +10,12 @@ type Props = {
     onClose?: () => void,
     title: string,
     size?: 'sm'|'md'|'lg'|'full',
+    position?: 'top'|'left'|'top|left'|'right'|'top|right'|'bottom'|'bottom|left'|'bottom|right'|'center',
     supportFullscreen?: boolean
 }
 type ModalProps = Props & React.PropsWithChildren
 
-function Modal({ open, title, onClose = () => {}, size = 'sm', supportFullscreen, children }:Readonly<ModalProps>): React.ReactElement<ModalProps>|null {
+function Modal({ open, title, onClose = () => {}, size = 'sm', supportFullscreen, children, position = 'center' }:Readonly<ModalProps>): React.ReactElement<ModalProps>|null {
     const enableFullscreen = document.fullscreenEnabled && supportFullscreen
     const { t } = useTranslation()
     const [fullscreen, setFullscreen] = useState(false)
@@ -23,16 +24,27 @@ function Modal({ open, title, onClose = () => {}, size = 'sm', supportFullscreen
         setFullscreen(old => !old)
     }
 
+    const boxPosition = ({
+        'top': { alignItems: 'start' },
+        'left': { justifyContent: 'start' },
+        'top|left': { alignItems: 'start', justifyContent: 'start' },
+        'right': { justifyContent: 'end' },
+        'top|right': { alignItems: 'start', justifyContent: 'end', },
+        'bottom': { alignItems: 'end' },
+        'bottom|left': { alignItems: 'end', justifyContent: 'start' },
+        'bottom|right': { alignItems: 'end', justifyContent: 'end' },
+        'center': { alignItems: 'center', justifyContent: 'center' }
+    } as any)[position]
     const boxStyles = ({
         'sm': { width:'480px' },
         'md': { width:'768px' },
         'lg': { width:'1024px' },
-        'full': { width:'100%', maxHeight: '100%', height: '100%', borderRadius: 0 }
+        'full': { width:'100%', maxHeight: '100%', height: '100%', borderRadius: 0, margin: 0 }
     } as any)[fullscreen ? 'full':size]
     
     if(!open)return null
     return (
-        <StyledContainer onClick={function(event) {
+        <StyledContainer style={boxPosition} onClick={function(event) {
             if(event.target !== event.currentTarget)return
             onClose()
         }}>
@@ -68,6 +80,7 @@ const StyledContainer = styled.div`
         display: flex;
         flex-direction: column;
         max-height: calc(100% - 50px);
+        margin: 25px;
     }
 `
 
