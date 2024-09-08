@@ -11,7 +11,7 @@ type NoteProps = {
 }
 
 function Note({ isGrid, note }: Readonly<NoteProps>) {
-    const { t } = useTranslation()
+    const { t, i18n } = useTranslation()
     return (
         <StyledContainer className={isGrid?'card grid-item':'list-item'}>
             <div className="header">
@@ -20,9 +20,16 @@ function Note({ isGrid, note }: Readonly<NoteProps>) {
                     {!isGrid && <NoteLabels labels={note.labels}/>}
                 </div>
                 <span className="space"></span>
+                {!isGrid && <span className="info">{note.getLastUpdated((t as any),i18n.resolvedLanguage)}</span>}
                 <Button circle={true} icon={<IconOption/>} iconOnly={true} text={t('note_options')}/>
             </div>
             {isGrid && <NoteLabels labels={note.labels}/>}
+            {isGrid && <div className="footer">
+                <Button text={t('view_note')} wrap={true}/>
+                <span className="info">
+                    {note.getLastUpdated((t as any),i18n.resolvedLanguage)}
+                </span>
+            </div>}
         </StyledContainer>
     )
 }
@@ -69,6 +76,16 @@ const StyledContainer = styled.div`
             text-overflow: ellipsis;
             white-space: nowrap;
         }
+    }
+    & .footer {
+        margin-top: 1em;
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+    }
+    & .info {
+        font-size: 0.8em;
+        opacity: 0.5;
     }
 `
 

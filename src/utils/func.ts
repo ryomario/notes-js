@@ -1,5 +1,3 @@
-import { useTranslation } from "react-i18next";
-
 export function copyObject(obj:any,deep=1) {
     if(!obj)return;
     if(typeof deep === 'boolean')deep = deep?1:0;
@@ -55,8 +53,7 @@ export function getElapsed(startDateTime: number,endDateTime?: number): {minutes
         years,
     };
 }
-export function getElapsedTime(startDateTime: number,endDateTime?: number): string {
-    const { t, i18n } = useTranslation()
+export function getElapsedTime(startDateTime: number,endDateTime?: number, t = (tmpl: string, data?: any)=>tmpl,lang?: string): string {
     const {minutes,hours,days,months,years} = getElapsed(startDateTime,endDateTime);
 
     if(months >= 3 || years > 0) {
@@ -67,24 +64,24 @@ export function getElapsedTime(startDateTime: number,endDateTime?: number): stri
         if(years > 0){
             options.year = 'numeric';
         }
-        return t('_on_{datetime}',{datetime: new Date(startDateTime).toLocaleDateString(i18n.resolvedLanguage,options)});
+        return t('on_{{datetime}}',{datetime: new Date(startDateTime).toLocaleDateString(lang,options)});
     }
 
     if(months > 0) {
-        return (months == 1) ? t('last_month') : t('{months}_months_ago',{months});
+        return (months == 1) ? t('last_month') : t('{{months}}_months_ago',{months});
     }
     if(days > 0) {
         let weeks = Math.floor(days / 7);
         if(weeks > 0){
-            return (weeks == 1) ? t('last_week') : t('{weeks}_weeks_ago',{weeks});
+            return (weeks == 1) ? t('last_week') : t('{{weeks}}_weeks_ago',{weeks});
         }
-        return (days == 1) ? t('yesterday') : t('{days}_days_ago',{days});
+        return (days == 1) ? t('yesterday') : t('{{days}}_days_ago',{days});
     }
     if(hours > 0){
-        return (hours == 1) ? t('an_hour_ago') : t('{hours}_hours_ago',{hours});
+        return (hours == 1) ? t('an_hour_ago') : t('{{hours}}_hours_ago',{hours});
     }
     if(minutes > 0){
-        return (minutes == 1) ? t('one_minute_ago') : t('{minutes}_minutes_ago',{minutes});
+        return (minutes == 1) ? t('one_minute_ago') : t('{{minutes}}_minutes_ago',{minutes});
     }
     return t('a_moment_ago');
 }

@@ -127,8 +127,10 @@ export default class Note {
                (this.content.toLowerCase().includes(str.toLowerCase())) ||
                (this.containsLabel(str));
     }
-    getLastUpdated() {
-        return getElapsedTime(this._updated_at,Date.now());
+    getLastUpdated(t = (tmpl: string, data: any) => tmpl, lang?: string) {
+        return t('updated_{{time}}',{
+            time: getElapsedTime(this._updated_at,Date.now(),t,lang)
+        });
     }
     toObject(): NoteRaw {
         const $this = this;

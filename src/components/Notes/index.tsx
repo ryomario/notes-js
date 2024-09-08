@@ -9,7 +9,7 @@ export type NotesProps = {
 
 function Notes({ isGrid, notes }:Readonly<NotesProps>) {
     return (
-        <StyledNotesContainer className={isGrid ? '' : 'card'}>
+        <StyledNotesContainer className={isGrid ? 'list' : 'grid card'}>
             {notes.map(note => <Note key={note.id} isGrid={isGrid} note={note}/>)}
         </StyledNotesContainer>
     )
@@ -20,6 +20,9 @@ const StyledNotesContainer = styled.div`
     flex-wrap: wrap;
     &, & *, & *::before, & *::after {
         box-sizing: border-box;
+    }
+    &.grid {
+        overflow: hidden;
     }
     &.card, .card {
         border: 1px solid #0007;

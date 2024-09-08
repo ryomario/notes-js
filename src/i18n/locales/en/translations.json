@@ -15,5 +15,20 @@
     "settings_theme_selector_label": "Select a Theme!",
     "select_language_label": "Select Language!",
     "content_tools_import": "Import",
-    "content_tools_export": "Export"
+    "content_tools_export": "Export",
+    "view_note": "View note",
+    "note_options": "Note options",
+    "on_{{datetime}}": "on {{datetime}}",
+    "last_month": "last month",
+    "{{months}}_months_ago": "{{months}} months ago",
+    "last_week": "last week",
+    "{{weeks}}_weeks_ago": "{{weeks}} weeks ago",
+    "yerterday": "yerterday",
+    "{{days}}_days_ago": "{{days}} days ago",
+    "an_hour_ago": "an hour ago",
+    "{{hours}}_hours_ago": "{{hours}} hours ago",
+    "one_minute_ago": "one minute ago",
+    "{{minutes}}_minutes_ago": "{{minutes}} minutes ago",
+    "a_moment_ago": "a moment ago",
+    "updated_{{time}}": "Updated {{time}}"
 }

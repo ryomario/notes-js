@@ -13,5 +13,22 @@
     "content_tools_changegrid": "Tampilkan sebagai Grid",
     "settings_save_last_state_label": "Simpan status akhir aplikasi?",
     "settings_theme_selector_label": "Pilih tema!",
-    "select_language_label": "Pilih bahasa!"
+    "select_language_label": "Pilih bahasa!",
+    "content_tools_import": "Impor",
+    "content_tools_export": "Ekspor",
+    "view_note": "Lihat catatan",
+    "note_options": "Pilihan lain",
+    "on_{{datetime}}": "pada {{datetime}}",
+    "last_month": "bulan lalu",
+    "{{months}}_months_ago": "{{months}} bulan yang lalu",
+    "last_week": "minggu lalu",
+    "{{weeks}}_weeks_ago": "{{weeks}} minggu yang lalu",
+    "yerterday": "kemarin",
+    "{{days}}_days_ago": "{{days}} hari yang lalu",
+    "an_hour_ago": "satu jam yang lalu",
+    "{{hours}}_hours_ago": "{{hours}} jam yang lalu",
+    "one_minute_ago": "satu menit yang lalu",
+    "{{minutes}}_minutes_ago": "{{minutes}} menit yang lalu",
+    "a_moment_ago": "baru saja",
+    "updated_{{time}}": "Diubah {{time}}"
 }
