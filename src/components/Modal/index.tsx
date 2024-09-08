@@ -11,11 +11,12 @@ type Props = {
     title: string,
     size?: 'sm'|'md'|'lg'|'full',
     position?: 'top'|'left'|'top|left'|'right'|'top|right'|'bottom'|'bottom|left'|'bottom|right'|'center',
-    supportFullscreen?: boolean
+    supportFullscreen?: boolean,
+    showHeader?: boolean,
 }
 type ModalProps = Props & React.PropsWithChildren
 
-function Modal({ open, title, onClose = () => {}, size = 'sm', supportFullscreen, children, position = 'center' }:Readonly<ModalProps>): React.ReactElement<ModalProps>|null {
+function Modal({ open, title, onClose = () => {}, size = 'sm', supportFullscreen, children, position = 'center', showHeader = true }:Readonly<ModalProps>): React.ReactElement<ModalProps>|null {
     const enableFullscreen = document.fullscreenEnabled && supportFullscreen
     const { t } = useTranslation()
     const [fullscreen, setFullscreen] = useState(false)
@@ -49,11 +50,11 @@ function Modal({ open, title, onClose = () => {}, size = 'sm', supportFullscreen
             onClose()
         }}>
             <div className="box" style={boxStyles}>
-                <StyledHeader>
+                {showHeader && <StyledHeader>
                     <span className="title">{title}</span>
                     {enableFullscreen && <button title={t(fullscreen?'exit_fullscreen':'enter_fullscreen')} onClick={toggleFullscreen}>{fullscreen?<IconMinimize/>:<IconMaximize/>}</button>}
                     <button title={t('close_modal')} style={{ marginLeft: '1em' }} onClick={onClose}><IconClose/></button>
-                </StyledHeader>
+                </StyledHeader>}
                 <StyledContent>
                     {children}
                 </StyledContent>
