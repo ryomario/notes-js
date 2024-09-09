@@ -1,5 +1,5 @@
 import DB from "./DB";
-import Note, { NoteRaw } from "../models/Note";
+import Note, { NoteRaw, isNoteMatchByAttr } from "../models/Note";
 
 const TABLE = 'notes'
 
@@ -13,22 +13,22 @@ export default class NotesStore {
             await DB.table(TABLE).getAllWithCursor<NoteRaw>((note, cursor): boolean => {
                 let pass = true
                 if(filterAttr) {
-                    for (const key in filterAttr) {
-                        if((note as any)[key] != (filterAttr as any)[key])pass = false
-                    }
+                    pass = isNoteMatchByAttr(note,filterAttr)
+                    console.log('pass',pass,note.title,filterAttr.title)
                 }
                 if(!advanced && start <= counter){
                     advanced = true; // just status
                 }
                 if(allData.size < length) {
                     if(pass && advanced){
+                        console.log('added',note.title)
                         allData.set(note.id,note)
                     }
                 }else{
                     // console.log('done',start,length)
                 }
                 cursor.continue()
-               if(pass)counter++
+                if(pass)counter++
                 return pass
             }).then(_allData => {
                 totalData = _allData.size

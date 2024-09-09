@@ -9,6 +9,14 @@ export type NoteRaw = {
     updated_at: number,
     labels?: string,
 }
+export function isNoteMatchByAttr(note: NoteRaw, attr: Partial<NoteRaw>) {
+    if(attr.pinned !== undefined && note.pinned == attr.pinned)return true
+    // if(attr.labels !== undefined)
+    if(attr.title !== undefined && note.title.toLowerCase().includes(attr.title.toLowerCase()))return true
+    if(attr.content !== undefined && note.content.toLowerCase().includes(attr.content.toLowerCase()))return true
+
+    return false
+}
 export default class Note {
     private _id: string;
     get id(): string {return this.getAttribute('id')}

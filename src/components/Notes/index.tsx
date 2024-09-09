@@ -8,6 +8,7 @@ export type NotesProps = {
 }
 
 function Notes({ isGrid, notes }:Readonly<NotesProps>) {
+    if(notes.length == 0)return null
     return (
         <StyledNotesContainer className={isGrid ? 'list' : 'grid card'}>
             {notes.map(note => <Note key={note.id} isGrid={isGrid} note={note}/>)}

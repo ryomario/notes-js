@@ -9,6 +9,7 @@ import { useContext } from 'react'
 import { ModalManagerContext } from '../../context/ModalManagerContext'
 import ModalSettings, { MODAL_ID as SETTINGS_MODAL_ID } from '../modals/ModalSettings'
 import ToolButton from './ToolButton'
+import ModalSearch, { MODAL_ID as SEARCH_MODAL_ID } from '../modals/ModalSearch'
 
 function Header(){
     const { t } = useTranslation()
@@ -34,7 +35,7 @@ function Header(){
                 <div className="space"></div>
                 <SearchButton
                     onClick={() => {
-                        openModal('modal-search')
+                        openModal(SEARCH_MODAL_ID)
                     }}
                 />
                 <ToolButton text={t('settings')} icon={<IconCog/>}  iconOnly={true} wrap={false}
@@ -49,7 +50,7 @@ function Header(){
                 />
             </div>
             <ModalSettings/>
-            <Modal open={isOpen('modal-search')} title='Search' onClose={closeModal} supportFullscreen={true}/>
+            <ModalSearch/>
             <Modal open={isOpen('modal-add-note')} title='Modal title' onClose={closeModal} supportFullscreen={true}/>
         </StyledHeader>
     )

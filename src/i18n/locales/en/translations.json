@@ -30,5 +30,11 @@
     "one_minute_ago": "one minute ago",
     "{{minutes}}_minutes_ago": "{{minutes}} minutes ago",
     "a_moment_ago": "a moment ago",
-    "updated_{{time}}": "Updated {{time}}"
+    "updated_{{time}}": "Updated {{time}}",
+    "cancel_search": "Cancel",
+    "search_note_placeholder": "Search note",
+    "search_note_loading": "Loading...",
+    "search_note_empty": "No records found!",
+    "search_note_load_more": "Load more",
+    "search_clear_field": "Clear input"
 }
