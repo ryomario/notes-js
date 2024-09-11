@@ -14,14 +14,12 @@ export default class NotesStore {
                 let pass = true
                 if(filterAttr) {
                     pass = isNoteMatchByAttr(note,filterAttr)
-                    console.log('pass',pass,note.title,filterAttr.title)
                 }
                 if(!advanced && start <= counter){
                     advanced = true; // just status
                 }
                 if(allData.size < length) {
                     if(pass && advanced){
-                        console.log('added',note.title)
                         allData.set(note.id,note)
                     }
                 }else{

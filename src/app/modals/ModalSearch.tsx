@@ -80,7 +80,7 @@ function ModalSearch() {
                 </label>
                 <Button text={t('cancel_search')} size="md" onClick={closeModal}/>
             </StyledSearch>
-            <Notes isGrid={false} notes={notes}/>
+            <Notes isGrid={false} notes={notes} hideOptions={true}/>
             <div style={{ textAlign: 'center', marginTop: '0.5em' }}>{loading?t('search_note_loading') : footer}</div>
         </Modal>
     )

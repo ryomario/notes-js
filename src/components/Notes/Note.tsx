@@ -7,10 +7,11 @@ import NoteLabels from "./NoteLabels"
 
 type NoteProps = {
     isGrid: boolean,
-    note: NoteModel
+    note: NoteModel,
+    hideOptions?: boolean,
 }
 
-function Note({ isGrid, note }: Readonly<NoteProps>) {
+function Note({ isGrid, note, hideOptions = false }: Readonly<NoteProps>) {
     const { t, i18n } = useTranslation()
     return (
         <StyledContainer className={isGrid?'card grid-item':'list-item'}>
@@ -21,7 +22,7 @@ function Note({ isGrid, note }: Readonly<NoteProps>) {
                 </div>
                 <span className="space"></span>
                 {!isGrid && <span className="info">{note.getLastUpdated((t as any),i18n.resolvedLanguage)}</span>}
-                <Button circle={true} icon={<IconOption/>} iconOnly={true} text={t('note_options')}/>
+                {!hideOptions && <Button circle={true} icon={<IconOption/>} iconOnly={true} text={t('note_options')}/>}
             </div>
             {isGrid && <NoteLabels labels={note.labels}/>}
             {isGrid && <div className="footer">
@@ -35,7 +36,6 @@ function Note({ isGrid, note }: Readonly<NoteProps>) {
 }
 
 const StyledContainer = styled.div`
-    --gap: 1em;
     padding: 0.5em;
     display: flex;
     flex-direction: column;
