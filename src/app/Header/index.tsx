@@ -10,10 +10,12 @@ import { ModalManagerContext } from '../../context/ModalManagerContext'
 import ModalSettings, { MODAL_ID as SETTINGS_MODAL_ID } from '../modals/ModalSettings'
 import ToolButton from './ToolButton'
 import ModalSearch, { MODAL_ID as SEARCH_MODAL_ID } from '../modals/ModalSearch'
+import { NoteAppContext } from '../../context/NoteAppContext'
 
 function Header(){
     const { t } = useTranslation()
     const { openedModalId, isOpen, openModal, closeModal } = useContext(ModalManagerContext)
+    const { openNoteModal } = useContext(NoteAppContext)
 
     document.onkeydown = function(e) {
         if(e.ctrlKey && e.key.toLowerCase() == 'k') {
@@ -45,13 +47,12 @@ function Header(){
                 />
                 <ToolButton text={t('new_note')} icon={<IconPlus/>}  iconOnly={false} wrap={true}
                     onClick={() => {
-                        openModal('modal-add-note')
+                        openNoteModal?.()
                     }}
                 />
             </div>
             <ModalSettings/>
             <ModalSearch/>
-            <Modal open={isOpen('modal-add-note')} title='Modal title' onClose={closeModal} supportFullscreen={true}/>
         </StyledHeader>
     )
 }

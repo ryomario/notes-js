@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { ReactNode, useEffect, useRef, useState } from "react"
 import styled from "styled-components"
 import IconClose from "../../assets/icons/x.svg"
 import IconMaximize from "../../assets/icons/maximize.svg"
 import IconMinimize from "../../assets/icons/minimize.svg"
 import { useTranslation } from "react-i18next"
+import { createPortal } from "react-dom"
 
 type Props = {
     open: boolean,
@@ -13,10 +14,11 @@ type Props = {
     position?: 'top'|'left'|'top|left'|'right'|'top|right'|'bottom'|'bottom|left'|'bottom|right'|'center',
     supportFullscreen?: boolean,
     showHeader?: boolean,
+    tools?: Array<ReactNode>,
 }
 type ModalProps = Props & React.PropsWithChildren
 
-function Modal({ open, title, onClose = () => {}, size = 'sm', supportFullscreen, children, position = 'center', showHeader = true }:Readonly<ModalProps>): React.ReactElement<ModalProps>|null {
+function Modal({ open, title, onClose = () => {}, size = 'sm', supportFullscreen, children, position = 'center', showHeader = true, tools }:Readonly<ModalProps>): React.ReactElement<ModalProps>|null {
     const enableFullscreen = document.fullscreenEnabled && supportFullscreen
     const { t } = useTranslation()
     const [fullscreen, setFullscreen] = useState(false)
@@ -44,7 +46,7 @@ function Modal({ open, title, onClose = () => {}, size = 'sm', supportFullscreen
     } as any)[fullscreen ? 'full':size]
     
     if(!open)return null
-    return (
+    return createPortal(
         <StyledContainer style={boxPosition} onClick={function(event) {
             if(event.target !== event.currentTarget)return
             onClose()
@@ -52,14 +54,16 @@ function Modal({ open, title, onClose = () => {}, size = 'sm', supportFullscreen
             <div className="box" style={boxStyles}>
                 {showHeader && <StyledHeader>
                     <span className="title">{title}</span>
-                    {enableFullscreen && <button title={t(fullscreen?'exit_fullscreen':'enter_fullscreen')} onClick={toggleFullscreen}>{fullscreen?<IconMinimize/>:<IconMaximize/>}</button>}
-                    <button title={t('close_modal')} style={{ marginLeft: '1em' }} onClick={onClose}><IconClose/></button>
+                    {tools}
+                    {enableFullscreen && <button className="header-tool" title={t(fullscreen?'exit_fullscreen':'enter_fullscreen')} onClick={toggleFullscreen}>{fullscreen?<IconMinimize/>:<IconMaximize/>}</button>}
+                    <button className="header-tool" title={t('close_modal')} style={{ marginLeft: '1em' }} onClick={onClose}><IconClose/></button>
                 </StyledHeader>}
                 <StyledContent>
                     {children}
                 </StyledContent>
             </div>
-        </StyledContainer>
+        </StyledContainer>,
+        document.body
     )
 }
 
@@ -89,12 +93,15 @@ const StyledHeader = styled.div`
     display: flex;
     align-items: flex-start;
     margin-bottom: 1em;
+    & > :not(:last-child) {
+        margin-right: 0.5em;
+    }
     & .title {
         font-size: 1.25em;
         font-weight: bold;
         margin-right: auto;
     }
-    & button {
+    & button.header-tool {
         display: block;
         width: 2em;
         height: 2em;
@@ -106,11 +113,8 @@ const StyledHeader = styled.div`
         outline: none;
         opacity: 0.8;
     }
-    & button:hover {
+    & button.header-tool:hover {
         opacity: 1;
-    }
-    & button:not(:last-child) {
-        margin-right: 0.5em;
     }
 `
 

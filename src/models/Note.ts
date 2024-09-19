@@ -130,6 +130,15 @@ export default class Note {
 
         this.labels = labels.join(',');
     }
+    removeLabel(label: string) {
+        if(!label?.trim() || !this.hasLabels())return;
+        const labels = this.labels;
+        const idx = labels.findIndex(t => t.toLowerCase() == label.toLowerCase());
+        if(idx != -1){
+            labels.splice(idx, 1);
+            this.labels = labels;
+        }
+    }
     containsString(str: string): boolean {
         return (this.title.toLowerCase().includes(str.toLowerCase())) ||
                (this.content.toLowerCase().includes(str.toLowerCase())) ||

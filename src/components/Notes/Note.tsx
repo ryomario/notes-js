@@ -4,6 +4,10 @@ import Button from "../Button"
 import IconOption from "../../assets/icons/option.svg"
 import { useTranslation } from "react-i18next"
 import NoteLabels from "./NoteLabels"
+import { useContext, useState } from "react"
+import Popup from "../Popup"
+import ButtonOptionsWithPopup from "./ButtonOptionsWithPopup"
+import { NoteAppContext } from "../../context/NoteAppContext"
 
 type NoteProps = {
     isGrid: boolean,
@@ -13,20 +17,22 @@ type NoteProps = {
 
 function Note({ isGrid, note, hideOptions = false }: Readonly<NoteProps>) {
     const { t, i18n } = useTranslation()
+    const { openNoteModal } = useContext(NoteAppContext)
+
     return (
         <StyledContainer className={isGrid?'card grid-item':'list-item'}>
             <div className="header">
                 <div className="title-container">
-                    <span className="title">{note.title}</span>
+                    <span className="title">{isGrid ? note.title : <button onClick={() => openNoteModal?.(note.id,true)}>{note.title}</button>}</span>
                     {!isGrid && <NoteLabels labels={note.labels}/>}
                 </div>
                 <span className="space"></span>
                 {!isGrid && <span className="info">{note.getLastUpdated((t as any),i18n.resolvedLanguage)}</span>}
-                {!hideOptions && <Button circle={true} icon={<IconOption/>} iconOnly={true} text={t('note_options')}/>}
+                {!hideOptions && <ButtonOptionsWithPopup note={note}/>}
             </div>
             {isGrid && <NoteLabels labels={note.labels}/>}
             {isGrid && <div className="footer">
-                <Button text={t('view_note')} wrap={true}/>
+                <Button text={t('view_note')} wrap={true} onClick={() => openNoteModal?.(note.id,true)}/>
                 <span className="info">
                     {note.getLastUpdated((t as any),i18n.resolvedLanguage)}
                 </span>
@@ -54,6 +60,14 @@ const StyledContainer = styled.div`
             margin-bottom: 0;
         }
     }
+    &.list-item:first-child {
+        border-top-left-radius: inherit;
+        border-top-right-radius: inherit;
+    }
+    &.list-item:last-child {
+        border-bottom-left-radius: inherit;
+        border-bottom-right-radius: inherit;
+    }
     & .header {
         margin-bottom: 1em;
         display: flex;
@@ -75,6 +89,18 @@ const StyledContainer = styled.div`
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            & button {
+                background-color: transparent;
+                color: inherit;
+                font-size: inherit;
+                border: 0;
+                outline: none;
+                font-weight: inherit;
+                &:hover {
+                    text-decoration: underline;
+                    cursor: pointer;
+                }
+            }
         }
     }
     & .footer {

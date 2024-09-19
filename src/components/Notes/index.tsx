@@ -28,7 +28,7 @@ const StyledNotesContainer = styled.div`
         margin-right: calc(-1 * var(--gap));
     }
     &.list {
-        overflow: hidden;
+        overflow: visible;
     }
     &.card, .card {
         border: 1px solid #0007;

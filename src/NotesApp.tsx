@@ -4,6 +4,8 @@ import CardMenus, { MenuType } from './app/Aside/CardMenus'
 import { useTranslation } from 'react-i18next'
 import NotesContent from './app/contents/NotesContent'
 import { useSavedState } from './store/Preferences'
+import { NoteAppContextProvider } from './context/NoteAppContext'
+import ModalNote from './app/modals/note'
 
 function NotesApp() {
   const { t } = useTranslation()
@@ -13,7 +15,7 @@ function NotesApp() {
     if(menuId != id)setMenuId(id)
   }
   return (
-    <>
+    <NoteAppContextProvider>
       <GlobalStyles/>
       <Header/>
       <main>
@@ -37,7 +39,8 @@ function NotesApp() {
           <NotesContent open={menuId == 'pinned-notes'} title={t('content_pinnednotes_title')} id='pinnednotes' filterAttr={{ pinned: true }}/>
         </div>
       </main>
-    </>
+      <ModalNote />
+    </NoteAppContextProvider>
   )
 }
 

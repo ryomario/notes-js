@@ -6,12 +6,13 @@ import IconList from "../../assets/icons/layout-list.svg"
 import IconImport from "../../assets/icons/import.svg"
 import IconExport from "../../assets/icons/export.svg"
 import { useSavedState } from "../../store/Preferences"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import Notes from "../../components/Notes"
 import NotesStore from "../../store/Notes"
 import Note, { NoteRaw } from "../../models/Note"
 import { FileJSONParse, importFile } from "../../utils/func"
 import Pagination from "../../components/Pagination"
+import { NoteAppContext } from "../../context/NoteAppContext"
 
 type NotesContentProps = ContentProps & {
     id: string,
@@ -20,6 +21,7 @@ type NotesContentProps = ContentProps & {
 }
 
 function NotesContent({ open, title, id, filterAttr }: Readonly<NotesContentProps>) {
+    const { refreshHelper } = useContext(NoteAppContext)
     const { t } = useTranslation()
     const {state:isGrid, setState:setIsGrid} = useSavedState<boolean>('last-isgrid-content-'+id,true)
     const toggleGrid = () => {
@@ -30,7 +32,7 @@ function NotesContent({ open, title, id, filterAttr }: Readonly<NotesContentProp
     const [notes, setNotes] = useState<Array<Note>>([])
     const [currPage, setCurrPage] = useState(1)
     const [totalPage, setTotalPage] = useState(0)
-    const notesPerPage = 5
+    const notesPerPage = 10
 
     const HandlePagination = (page: number) => {
         setCurrPage(page)
@@ -55,7 +57,7 @@ function NotesContent({ open, title, id, filterAttr }: Readonly<NotesContentProp
     },[])
     useEffect(() => {
         loadNotes()
-    },[currPage])
+    },[currPage,refreshHelper])
 
     const handleClickImport = () => {
         importFile('application/json,text/*',{

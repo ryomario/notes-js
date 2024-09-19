@@ -36,5 +36,47 @@
     "search_note_loading": "Loading...",
     "search_note_empty": "No records found!",
     "search_note_load_more": "Load more",
-    "search_clear_field": "Clear input"
+    "search_clear_field": "Clear input",
+    "note_option_edit": "Edit",
+    "note_option_pin": "Pin",
+    "note_option_unpin": "Unpin",
+    "note_option_delete": "Delete",
+
+    "Import data type not Array!": "Import data type not Array!",
+    "Import data empty!": "Import data empty!",
+
+    "confirm_discard_note_changes": "Note already changed, do you want to discard the changes?",
+
+    "close_modal": "Close Modal",
+    "enter_fullscreen": "Enter Fullscreen",
+    "exit_fullscreen": "Exit Fullscreen",
+
+    "modal_add_note_title": "Add New Note",
+    "modal_edit_note_title": "Edit Note",
+    "modal_view_note_title": "View Note",
+
+    "new_note_title": "New Note",
+
+    "note_title_label": "Title",
+    "note_pinned_label": "is Pinned?",
+    "note_labels_label": "Labels",
+    "note_contents_label": "Contents",
+
+    "editor_bold": "Bold",
+    "editor_italic": "Italic",
+    "editor_underline": "Underline",
+    "editor_strikethrough": "Strike Through",
+    "editor_list_numbered": "Numbered List",
+    "editor_list_bullet": "Bullet List",
+    "editor_link": "Link",
+    "editor_clear_format": "Clear Formatting",
+    "editor_styles": "Styles",
+    "editor_html_mode": "HTML Mode",
+    "editor_style_normal": "Normal",
+    "editor_style_header1": "𝗛𝗲𝗮𝗱𝗲𝗿 𝟭",
+    "editor_style_header2": "Header 2",
+    "editor_style_code": "𝙲𝚘𝚍𝚎",
+
+    "save_note": "Save",
+    "saving_note": "Saving"
 }

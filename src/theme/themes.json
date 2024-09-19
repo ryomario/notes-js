@@ -25,6 +25,7 @@
             "field": {
                 "background": "#fafafa",
                 "primary": "#dca47c",
+                "text_active": "#0000ff",
                 "text": "#000000"
             },
             "modal": {

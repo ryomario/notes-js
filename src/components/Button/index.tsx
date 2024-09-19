@@ -10,9 +10,10 @@ type ButtonProps = {
     onClick?: React.MouseEventHandler<HTMLButtonElement>,
     disabled?: boolean,
     circle?: boolean,
+    fullWidth?: boolean,
 }
 
-function Button({text,iconOnly,size,icon,onClick,wrap,disabled,circle}:Readonly<ButtonProps>): React.ReactElement<ButtonProps> {
+function Button({text,iconOnly,size,icon,onClick,wrap,disabled,circle,fullWidth}:Readonly<ButtonProps>): React.ReactElement<ButtonProps> {
     const fontSize: string = ({
         'sm': '',
         'md': '1em',
@@ -21,7 +22,7 @@ function Button({text,iconOnly,size,icon,onClick,wrap,disabled,circle}:Readonly<
     })[size!] ?? ''
     const className: string = `${wrap?'wrap':''} ${circle?'circle':''}`
     return (
-        <StyledButtonText className={className} style={{fontSize}} onClick={onClick} title={text} disabled={disabled}>
+        <StyledButtonText className={className} style={{fontSize, width: fullWidth ? '100%':'auto'}} onClick={onClick} title={text} disabled={disabled}>
             {icon && <span className="icon">{icon}</span>}
             {(!iconOnly || !icon) && <span className="label">{text}</span>}
         </StyledButtonText>
@@ -44,13 +45,14 @@ const StyledButtonText = styled.button`
         padding: 0.25em;
     }
     &:disabled, &.disabled {
-        opacity: 0.5;
+        opacity: 0.5 !important;
+        cursor: not-allowed;
     }
     &:not(:disabled):hover {
         cursor: pointer;
         opacity: 1;
     }
-    &:not(:disabled):not(.wrap):hover,
+    &:not(:disabled):not(.disabled):not(.wrap):hover,
     &.wrap {
         background-color: ${({ theme }) => theme?.colors?.button?.background };
         color: ${({ theme }) => theme?.colors?.button?.text };
