@@ -30,7 +30,7 @@ Preferences.get('lang',lang => {
 })
 i18n.on('languageChanged',lng => {
     Preferences.set('lang',lng,() => {
-        console.log('language changed',lng)
+        // console.log('language changed',lng)
     })
 })
 

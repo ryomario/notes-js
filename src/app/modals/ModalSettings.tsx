@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import ThemeSelector from "./inputs/ThemeSelector";
 import ToggleSaveState from "./inputs/ToggleSaveState";
 import LanguageSelector from "./inputs/LanguageSelector";
+import ImportNotes from "./ImportNotes";
 
 export const MODAL_ID = 'modal-settings'
 function ModalSettings() {
@@ -18,6 +19,8 @@ function ModalSettings() {
             <LanguageSelector/>
             <br />
             <ThemeSelector/>
+            <br />
+            <ImportNotes/>
         </Modal>
     )
 }

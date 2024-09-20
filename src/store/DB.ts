@@ -152,6 +152,8 @@ export default class DB {
                                 setRequest.onsuccess = function() {
                                     resolve(setRequest.result);
                                 }
+                            }else{
+                                resolve(false);
                             }
                         }
                     }).catch(reject);

@@ -17,7 +17,7 @@ function ToggleSaveState() {
     useEffect(() => {
         if(isSave !== null) {
             Preferences.set('save-last-state',isSave,() => {
-                console.log('saved', isSave)
+                // console.log('saved', isSave)
             })
         }
     },[isSave])

@@ -61,7 +61,7 @@ function ModalSearch() {
                     })
                     setNotes(_notes)
                     setLoading(false)
-                },{content: textSearch, title: textSearch})
+                },{labels: textSearch.trim(), title: textSearch.trim()})
             }else {
                 setNotes([])
             }

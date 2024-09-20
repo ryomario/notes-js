@@ -1,5 +1,6 @@
 import DB from "./DB";
 import Note, { NoteRaw, isNoteMatchByAttr } from "../models/Note";
+import { copyObject } from "../utils/func";
 
 const TABLE = 'notes'
 
@@ -49,46 +50,24 @@ export default class NotesStore {
     static delete(id: string, callback: (deleted: boolean)=>void) {
         DB.table(TABLE).remove(id).then(callback)
     }
-    static async importNotes(notes: Array<NoteRaw>, onsave: (note: NoteRaw)=>void, t = (_:string,data?: any) => _) {
-        // check structure
-        if(!Array.isArray(notes)){
-            window.alert(t('Import data type not Array!'));
-            return;
-        }
-        if(notes.length == 0){
-            window.alert(t('Import data empty!'));
-            return;
-        }
-        let invalidcount = 0;
-        let count = notes.length;
-        
-        const notesObj: Array<NoteRaw> = [];
-        for (const item of notes) {
-            // check structure
-            let isValid = Note.isValidObject(item);
-            // check is existing
-            // if(isValid && exists)isValid = false;
-
-            if(!isValid)invalidcount++;
-            else notesObj.push(item);
-        }
-
-        const proceed = window.confirm(t('Import data, {{1}} items invalid from total {{2}} items!',{1:invalidcount,2:count}));
-
-        if(!proceed)return;
-
+    static async saveNotesIfNotExist(notes: Array<NoteRaw>, callback: (notSavedNotes: Array<NoteRaw>)=>void) {
+        const notesObj = copyObject(notes);
+        const notSavedNotes: Array<NoteRaw> = [];
         function SaveNoteObject() {
             if(notesObj.length > 0) {
                 const note = notesObj.shift();
         
                 if(note){
                     DB.table(TABLE).addIfNotExist(note.id,note).then((result) => {
-                        if(!result)return;
-                        onsave(note);
+                        if(!result){
+                            notSavedNotes.push(note);
+                        }
     
                         SaveNoteObject();
                     });
                 }
+            }else{
+                callback(notSavedNotes);
             }
         }
         

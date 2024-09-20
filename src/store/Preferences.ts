@@ -26,7 +26,7 @@ export function useSavedState<T>(name: string, defaultValue: T) {
         Preferences.get('save-last-state',(isSave: boolean) => {
             if(isSave && state != undefined){
                 Preferences.set(name,state,() => {
-                    console.log('saved state',name)
+                    // console.log('saved state',name)
                 })
             }
         })

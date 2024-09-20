@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import NoteModel from "../../models/Note"
 import Note from "./Note"
+import { useTranslation } from "react-i18next"
 
 export type NotesProps = {
     isGrid: boolean,
@@ -9,7 +10,8 @@ export type NotesProps = {
 }
 
 function Notes({ isGrid, notes, hideOptions = false }:Readonly<NotesProps>) {
-    if(notes.length == 0)return null
+    const { t } = useTranslation()
+    if(notes.length == 0)return <div style={{textAlign:'center'}}>{t('empty_notes')}</div>
     return (
         <StyledNotesContainer className={isGrid ? 'grid' : 'list card'}>
             {notes.map(note => <Note key={note.id} isGrid={isGrid} note={note} hideOptions={hideOptions}/>)}

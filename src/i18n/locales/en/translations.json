@@ -43,11 +43,20 @@
     "note_option_delete": "Delete",
     "note_pinned": "Note pinned",
 
+    "button_setting_import_notes": "Import Notes",
+    "modal_import_notes_title": "Import Notes",
+    "import_notes_input_file_label": "Select File",
+    "import_notes_input_file_label_not_selected": "No file selected!",
+    "import_notes_button_parse": "Parse JSON",
+    "import_notes_button_save": "Save notes",
+
     "Import data type not Array!": "Import data type not Array!",
     "Import data empty!": "Import data empty!",
 
     "confirm_discard_note_changes": "Note already changed, do you want to discard the changes?",
 
+    "loading": "Loading...",
+    "empty_notes": "Empty Notes",
     "close_modal": "Close Modal",
     "enter_fullscreen": "Enter Fullscreen",
     "exit_fullscreen": "Exit Fullscreen",

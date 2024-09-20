@@ -11,7 +11,10 @@ export type NoteRaw = {
 }
 export function isNoteMatchByAttr(note: NoteRaw, attr: Partial<NoteRaw>) {
     if(attr.pinned !== undefined && note.pinned == attr.pinned)return true
-    // if(attr.labels !== undefined)
+    if(attr.labels !== undefined) {
+        let mNote = Note.createFromObject(note)
+        if(mNote.includesLabels(attr.labels.split(',').map(label => label.trim()).filter(label => label))) return true
+    }
     if(attr.title !== undefined && note.title.toLowerCase().includes(attr.title.toLowerCase()))return true
     if(attr.content !== undefined && note.content.toLowerCase().includes(attr.content.toLowerCase()))return true
 
