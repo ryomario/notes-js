@@ -16,6 +16,8 @@
     "select_language_label": "Select Language!",
     "content_tools_import": "Import",
     "content_tools_export": "Export",
+    "content_tools_export_{{count}}_items_one": "Export \"one\" item",
+    "content_tools_export_{{count}}_items_other": "Export \"{{count}}\" items",
     "view_note": "View note",
     "note_options": "Note options",
     "on_{{datetime}}": "on {{datetime}}",
@@ -93,5 +95,13 @@
     "modal_delete_note_title": "Delete Note?",
     "note_delete_message": "Are you sure you want to delete the note with the title \"{{noteTitle}}\"?",
     "btn_delete_note": "DELETE",
-    "btn_cancel_delete_note": "CANCEL"
+    "btn_cancel_delete_note": "CANCEL",
+
+    "show_{{count}}_items_one": "Show {{count}} item",
+    "show_{{count}}_items_other": "Show {{count}} items",
+    "from_total_{{count}}_items_one": "from total {{count}} item",
+    "from_total_{{count}}_items_other": "from total {{count}} items",
+    "confirm_export_notes_one": "a note will be exported!",
+    "confirm_export_notes_other": "{{count}} notes will be exported!",
+    "export_note_name": "[{{id}}]_all_notes.{{unique}}.json"
 }

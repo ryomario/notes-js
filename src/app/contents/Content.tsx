@@ -38,6 +38,8 @@ const StyledContentContainer = styled.div`
     }
     & .content-footer {
         margin-top: 1em;
+        display: flex;
+        flex-wrap: wrap;
     }
 `
 

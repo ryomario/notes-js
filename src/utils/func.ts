@@ -133,3 +133,38 @@ export function FileJSONParse(file: File, options: JSONParseOptions) {
     }
     reader.readAsText(file);
 }
+
+/**
+ * 
+ * @param {any} data data to be converted to JSON and will be downloaded as JSON File
+ * @param {string} filename filename of JSON File that will be downloaded
+ * @param {boolean} [pretty=false] if true, the JSON string will be pretty
+ */
+export function downloadAsJSON(data: any,filename: string,callback?: () => void,pretty=false) {
+    if(!filename)filename = 'data.json';
+    if(!filename.endsWith('.json'))filename += '.json';
+
+    let stringifyspace = pretty ? 2 : undefined;
+
+    try {
+        if(!window.Blob)throw new Error('Browser not supported "Blob" object.');
+
+        const fileblob = new Blob([JSON.stringify(data,undefined,stringifyspace)],{
+            type: 'application/json'
+        });
+
+        const fileurl = URL.createObjectURL(fileblob);
+
+        const anchor = document.createElement('a');
+        anchor.href = fileurl;
+        anchor.download = filename;
+
+        anchor.click();
+    } catch (error: any) {
+        if(error instanceof Error){
+            window.alert(error.name + ' : ' + error.message)
+        }
+    } finally {
+        callback?.()
+    }
+}

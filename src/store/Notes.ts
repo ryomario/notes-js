@@ -5,7 +5,7 @@ import { copyObject } from "../utils/func";
 const TABLE = 'notes'
 
 export default class NotesStore {
-    static getAllWithPagination(start: number,length: number,onfinished:(allData: Map<any,NoteRaw>,start:number,count:number,totalPage:number) => void,filterAttr?: Partial<NoteRaw>) {
+    static getAllWithPagination(start: number,length: number,onfinished:(allData: Map<any,NoteRaw>,start:number,count:number,totalPage:number,totalItems?:number) => void,filterAttr?: Partial<NoteRaw>) {
         (async function(){
             let counter = 0
             let totalData = 0
@@ -35,7 +35,30 @@ export default class NotesStore {
 
             const totalPage = Math.ceil(totalData / length) // round up
             // console.log('loaded',allData.size,'from total',totalData)
-            onfinished(allData, start, allData.size, totalPage)
+            onfinished(allData, start, allData.size, totalPage, totalData)
+        })()
+    }
+    static getAllWithFilter(filterAttr: Partial<NoteRaw>,onfinished:(allFilteredData: Map<any,NoteRaw>,totalData: number) => void) {
+        (async function(){
+            let counter = 0
+            let totalData = 0
+            const allData: Map<any,NoteRaw> = new Map()
+            await DB.table(TABLE).getAllWithCursor<NoteRaw>((note, cursor): boolean => {
+                let pass = true
+                if(filterAttr) {
+                    pass = isNoteMatchByAttr(note,filterAttr)
+                }
+                if(pass){
+                    allData.set(note.id,note)
+                }
+                cursor.continue()
+                if(pass)counter++
+                return pass
+            }).then(_allData => {
+                totalData = _allData.size
+            })
+
+            onfinished(allData, totalData)
         })()
     }
     static getAll(callback: (data: NoteRaw)=>void,onfinished:(allData: Map<any,NoteRaw>) => void) {
