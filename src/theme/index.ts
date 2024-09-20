@@ -24,11 +24,13 @@ export async function saveLocalTheme(themeId: string) {
 }
 
 // Populate themes in storage
-for (const key in themes) {
-    const theme = (themes as any)[key]
-    if(!theme.id)theme.id = await getNextId()
-    DB.table('themes').set(theme.id,theme) // always update on init
-}
+(async function(){
+    for (const key in themes) {
+        const theme = (themes as any)[key]
+        if(!theme.id)theme.id = await getNextId()
+        DB.table('themes').set(theme.id,theme) // always update on init
+    }
+})()
 
 export const DEFAULT_THEME = themes.light
 
