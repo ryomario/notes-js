@@ -41,6 +41,7 @@
     "note_option_pin": "Pin",
     "note_option_unpin": "Unpin",
     "note_option_delete": "Delete",
+    "note_pinned": "Note pinned",
 
     "Import data type not Array!": "Import data type not Array!",
     "Import data empty!": "Import data empty!",
@@ -78,5 +79,10 @@
     "editor_style_code": "𝙲𝚘𝚍𝚎",
 
     "save_note": "Save",
-    "saving_note": "Saving"
+    "saving_note": "Saving",
+
+    "modal_delete_note_title": "Delete Note?",
+    "note_delete_message": "Are you sure you want to delete the note with the title \"{{noteTitle}}\"?",
+    "btn_delete_note": "DELETE",
+    "btn_cancel_delete_note": "CANCEL"
 }

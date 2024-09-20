@@ -11,18 +11,24 @@ type ButtonProps = {
     disabled?: boolean,
     circle?: boolean,
     fullWidth?: boolean,
+    align?: 'left'|'center'|'right',
 }
 
-function Button({text,iconOnly,size,icon,onClick,wrap,disabled,circle,fullWidth}:Readonly<ButtonProps>): React.ReactElement<ButtonProps> {
+function Button({text,iconOnly,size,icon,onClick,wrap,disabled,circle,fullWidth,align='left'}:Readonly<ButtonProps>): React.ReactElement<ButtonProps> {
     const fontSize: string = ({
         'sm': '',
         'md': '1em',
         'lg': '1.25em',
         'xl': '1.5em'
     })[size!] ?? ''
+    const justifyContent: string = ({
+        'left': 'flex-start',
+        'center': 'center',
+        'right': 'flex-end',
+    })[align!] ?? ''
     const className: string = `${wrap?'wrap':''} ${circle?'circle':''}`
     return (
-        <StyledButtonText className={className} style={{fontSize, width: fullWidth ? '100%':'auto'}} onClick={onClick} title={text} disabled={disabled}>
+        <StyledButtonText className={className} style={{fontSize,justifyContent, width: fullWidth ? '100%':'auto'}} onClick={onClick} title={text} disabled={disabled}>
             {icon && <span className="icon">{icon}</span>}
             {(!iconOnly || !icon) && <span className="label">{text}</span>}
         </StyledButtonText>

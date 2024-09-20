@@ -6,6 +6,7 @@ import NotesContent from './app/contents/NotesContent'
 import { useSavedState } from './store/Preferences'
 import { NoteAppContextProvider } from './context/NoteAppContext'
 import ModalNote from './app/modals/note'
+import ModalDelete from './app/modals/note/ModalDelete'
 
 function NotesApp() {
   const { t } = useTranslation()
@@ -40,6 +41,7 @@ function NotesApp() {
         </div>
       </main>
       <ModalNote />
+      <ModalDelete />
     </NoteAppContextProvider>
   )
 }

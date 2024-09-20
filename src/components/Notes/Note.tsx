@@ -1,11 +1,10 @@
 import styled from "styled-components"
 import NoteModel from "../../models/Note"
 import Button from "../Button"
-import IconOption from "../../assets/icons/option.svg"
+import IconPinned from "../../assets/icons/pinned.svg"
 import { useTranslation } from "react-i18next"
 import NoteLabels from "./NoteLabels"
-import { useContext, useState } from "react"
-import Popup from "../Popup"
+import { useContext } from "react"
 import ButtonOptionsWithPopup from "./ButtonOptionsWithPopup"
 import { NoteAppContext } from "../../context/NoteAppContext"
 
@@ -22,8 +21,9 @@ function Note({ isGrid, note, hideOptions = false }: Readonly<NoteProps>) {
     return (
         <StyledContainer className={isGrid?'card grid-item':'list-item'}>
             <div className="header">
+                {note.pinned && <span className="icon-pinned" title={t('note_pinned')}><IconPinned/></span>}
                 <div className="title-container">
-                    <span className="title">{isGrid ? note.title : <button onClick={() => openNoteModal?.(note.id,true)}>{note.title}</button>}</span>
+                    <span className="title" title={note.title}>{isGrid ? note.title : <button onClick={() => openNoteModal?.(note.id,true)}>{note.title}</button>}</span>
                     {!isGrid && <NoteLabels labels={note.labels}/>}
                 </div>
                 <span className="space"></span>
@@ -74,6 +74,13 @@ const StyledContainer = styled.div`
         align-items: center;
         & > :not(:last-child) {
             margin-right: 0.5em;
+        }
+        & .icon-pinned {
+            display: inline-block;
+            width: 1.5em;
+            min-width: 1.5em;
+            height: 1.5em;
+            min-height: 1.5em;
         }
         & > .space {
             flex-grow: 1;

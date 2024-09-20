@@ -34,14 +34,15 @@ function Popup({ open, children, position, onClose, alignAxis = {x:'left',y:'top
 }
 
 const StyledContainer = styled.div`
-    display: block;
+    display: flex;
+    flex-direction: column;
     position: absolute;
     top: -99999px;
     left: -999999px;
     background-color: ${({ theme }) => theme?.colors?.modal?.background};
     color: ${({ theme }) => theme?.colors?.modal?.text};
     border: 1px solid;
-    padding: 0.5em;
+    padding: 0.25em;
     box-shadow: 4px 4px 8px #0002;
     border-radius: 0.5em;
     z-index: 4;

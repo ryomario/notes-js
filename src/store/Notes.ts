@@ -46,6 +46,9 @@ export default class NotesStore {
     static set(id: string, note: NoteRaw, callback: ()=>void) {
         DB.table(TABLE).set(id,note).then(callback)
     }
+    static delete(id: string, callback: (deleted: boolean)=>void) {
+        DB.table(TABLE).remove(id).then(callback)
+    }
     static async importNotes(notes: Array<NoteRaw>, onsave: (note: NoteRaw)=>void, t = (_:string,data?: any) => _) {
         // check structure
         if(!Array.isArray(notes)){

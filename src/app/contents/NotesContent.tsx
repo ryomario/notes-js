@@ -47,6 +47,9 @@ function NotesContent({ open, title, id, filterAttr }: Readonly<NotesContentProp
             allNotes.forEach(note => {
                 _notes.push(Note.createFromObject(note))
             })
+            if(currPage > _totalPage) {
+                setCurrPage(_totalPage)
+            }
             setNotes(_notes)
             setLoading(false)
         },filterAttr)

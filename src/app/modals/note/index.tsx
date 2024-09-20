@@ -89,7 +89,7 @@ function reducer(state: ModalNoteState, {type, payload}: ModalNoteAction): Modal
 }
 function ModalNote() {
     const { isOpen, closeModal } = useContext(ModalManagerContext)
-    const { addOnOpenNoteModal, toogleRefresh } = useContext(NoteAppContext)
+    const { addOnOpenNoteModal, toggleRefresh } = useContext(NoteAppContext)
     const { t } = useTranslation()
     const [state, dispatch] = useReducer(reducer, {
         modalTitle: t('modal_add_note_title'),
@@ -116,7 +116,7 @@ function ModalNote() {
             dispatch({ type: ModalNoteActionKind.SAVING })
 
             NotesStore.set(state.note.id,state.note.toObject(),() => {
-                toogleRefresh?.()
+                toggleRefresh?.()
                 dispatch({ type: ModalNoteActionKind.SAVING, payload: { saving: false } })
                 closeModal()
             })

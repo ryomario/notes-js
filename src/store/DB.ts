@@ -117,6 +117,20 @@ export default class DB {
                     }).catch(reject);
             });
         }
+        async function remove(id: any): Promise<boolean> {
+            return new Promise((resolve,reject) => {
+                $this.transaction(tablename, false)
+                    .then(store => {
+                        const request = store.delete(id);
+                        request.onerror = () => {
+                            throw request.error;
+                        }
+                        request.onsuccess = () => {
+                            resolve(true);
+                        }
+                    }).catch(() => reject(false));
+            });
+        }
         async function addIfNotExist(id:any,data:any) {
             data = createObject(data);
             data.id = id;
@@ -255,6 +269,7 @@ export default class DB {
         return {
             get,
             set,
+            remove,
             addIfNotExist,
             getAll,
             getAllKeys,
