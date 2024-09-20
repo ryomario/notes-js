@@ -111,7 +111,8 @@ const StyledContainer = styled.div`
         }
     }
     & .footer {
-        margin-top: 1em;
+        margin-top: auto;
+        padding-top: 1em;
         display: flex;
         align-items: flex-end;
         justify-content: space-between;
