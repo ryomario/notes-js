@@ -94,6 +94,9 @@ const StyledSearch = styled.div`
         flex-grow: 1;
         margin-right: 1em;
         position: relative;
+        border-radius: 0.25em;
+        background-color: ${({theme}) => theme?.colors?.field?.background};
+        color: ${({theme}) => theme?.colors?.field?.text};
         &.empty input {
             padding-right: 1em;
         }
@@ -120,8 +123,11 @@ const StyledSearch = styled.div`
             width: 100%;
             box-sizing: border-box;
             padding: 0.5em 2.5em;
-            border: 1px solid;
-            border-radius: 0.25em;
+            border: 1px solid #ddd;
+            border-radius: inherit;
+            background-color: inherit;
+            color: inherit;
+            outline: none;
         }
         & input:focus {
             outline: inset 1px solid;

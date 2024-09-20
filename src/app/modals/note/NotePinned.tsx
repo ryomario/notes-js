@@ -23,6 +23,7 @@ function NotePinned({ label, pinned, readonly = false, loading = false, onChange
 
 const StyledPinnedField = styled(StyledField)`
     background-color: transparent;
+    color: inherit;
     box-shadow: none !important;
     position: static;
     cursor: default !important;

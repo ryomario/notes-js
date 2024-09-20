@@ -6,8 +6,6 @@
         "colors": {
             "body": "#fcf8f3",
             "text": "#000000",
-            "body_accent": "#fae8d1",
-            "text_accent": "#000000",
             "header": {
                 "background": "#dca47c",
                 "text": "#ffffff",
@@ -39,31 +37,30 @@
         "name": "Default Dark",
         "font": "Arial",
         "colors": {
-            "body": "#653a1b",
+            "body": "#1f1f23",
             "text": "#ffffff",
-            "body_accent": "#804f2c",
-            "text_accent": "#ffffff",
             "header": {
-                "background": "#28170b",
-                "text": "#ffe6c8",
-                "accent": "#804f2c"
+                "background": "#2d2d2d",
+                "text": "#ffffff",
+                "accent": "#8cb4ff"
             },
             "card": {
-                "background": "#8d5125",
+                "background": "#2d2d2d",
                 "text": "#ffffff",
-                "accent": "#b56830"
+                "accent": "#39473f"
             },
             "button": {
-                "background": "#718e7d",
-                "text": "#ffffff"
+                "background": "#dbdbdb",
+                "text": "#222222"
             },
             "field": {
-                "background": "#fcf8f3",
-                "primary": "#dca47c",
+                "background": "#fafafa",
+                "primary": "#56baed",
+                "text_active": "#0000ff",
                 "text": "#000000"
             },
             "modal": {
-                "background": "#28170b",
+                "background": "#2d2d2d",
                 "text": "#ffffff"
             }
         }
