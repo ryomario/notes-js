@@ -53,7 +53,7 @@ function NoteContentEditor({ label, value, loading, readonly, onChange }: Readon
     }
 
     return (
-        <StyledFieldContent className={"focus " + ((loading||readonly)?'readonly':'')} label={label} htmlFor="note-content">
+        <StyledFieldContent className={"focus " + ((loading||readonly)?'readonly':'')} label={label}>
             {loading && <span className="input-readonly text-loading">Loading...</span>}
             {(readonly && !loading) && <div dangerouslySetInnerHTML={{__html: value}}></div>}
             {(!readonly && !loading) && (
@@ -81,7 +81,9 @@ function NoteContentEditor({ label, value, loading, readonly, onChange }: Readon
     )
 }
 
-const StyledFieldContent = styled(StyledField)`
+const StyledFieldContent = styled(StyledField).attrs({
+    as: 'div',
+})`
     display: block;
     width: auto;
     &:not(.readonly) {
