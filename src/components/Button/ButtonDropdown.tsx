@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import Button, { ButtonSize, StyledButtonText } from "."
-import { CSSProperties, MouseEvent, MouseEventHandler, PropsWithChildren, useState } from "react"
+import { CSSProperties, MouseEvent, MouseEventHandler, useState } from "react"
 import Popup from "../Popup"
 
 type ButtonAlign = 'left'|'center'|'right'

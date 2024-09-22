@@ -1,7 +1,6 @@
 import styled from "styled-components"
 import { Color, getCSSColorRGB, getHueDegFromStr, getTextColorFromBG, transformHue } from "../../utils/colors"
 import { CSSProperties } from "react"
-import Button from "../Button"
 import IconX from "../../assets/icons/x.svg"
 
 type NoteLabelProps = {

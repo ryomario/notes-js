@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useRef, useState } from "react"
+import React, { ReactNode, useState } from "react"
 import styled from "styled-components"
 import IconClose from "../../assets/icons/x.svg"
 import IconMaximize from "../../assets/icons/maximize.svg"

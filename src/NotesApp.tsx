@@ -31,7 +31,7 @@ function NotesApp() {
               label: t('pinned_notes_label'),
               selected: menuId == 'pinned-notes',
             }
-          ] as Array<MenuType>} onClickMenu={(id, menu) => {
+          ] as Array<MenuType>} onClickMenu={(id, _menu) => {
             openMenu(id)
           }}/>
         </aside>

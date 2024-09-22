@@ -66,6 +66,7 @@ function reducer(state: ModalNoteState, {type, payload}: ModalNoteAction): Modal
                     changed: payload.changed,
                 }
             }
+            break;
         case ModalNoteActionKind.CHANGE_NOTE:
             if(typeof payload.note !== "undefined"){
                 payload.changed = Note.isChanged(state._oldnote,payload.note)
@@ -75,16 +76,16 @@ function reducer(state: ModalNoteState, {type, payload}: ModalNoteAction): Modal
                     changed: payload.changed,
                 }
             }
+            break;
         case ModalNoteActionKind.SET_READONLY:
             if(typeof payload.readonly === "undefined")payload.readonly = true
             return {
                 ...state,
                 readonly: payload.readonly,
             }
-        default:
-            return {
-                ...state,
-            }
+    }
+    return {
+        ...state,
     }
 }
 function ModalNote() {

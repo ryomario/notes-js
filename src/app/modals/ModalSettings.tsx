@@ -9,7 +9,7 @@ import ImportNotes from "./ImportNotes";
 
 export const MODAL_ID = 'modal-settings'
 function ModalSettings() {
-    const { openedModalId, isOpen, closeModal } = useContext(ModalManagerContext)
+    const { isOpen, closeModal } = useContext(ModalManagerContext)
     const { t } = useTranslation()
 
     return (

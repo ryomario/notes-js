@@ -8,6 +8,8 @@ export const upgradeTable: OnUpgradeDB = function(this: IDBOpenDBRequest ,_event
     let store;
     if(!db.objectStoreNames.contains(TABLE))store = db.createObjectStore(TABLE,{ keyPath: 'id' });
     else store = this.transaction?.objectStore(TABLE);
+
+    console.assert(store?.name == TABLE);
 }
 
 export default class ThemesStore {

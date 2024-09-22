@@ -53,7 +53,7 @@ export function getElapsed(startDateTime: number,endDateTime?: number): {minutes
         years,
     };
 }
-export function getElapsedTime(startDateTime: number,endDateTime?: number, t = (tmpl: string, data?: any)=>tmpl,lang?: string): string {
+export function getElapsedTime(startDateTime: number,endDateTime?: number, t = (tmpl: string, _data?: any)=>tmpl,lang?: string): string {
     const {minutes,hours,days,months,years} = getElapsed(startDateTime,endDateTime);
 
     if(months >= 3 || years > 0) {
@@ -121,7 +121,7 @@ export function FileJSONParse(file: File, options: JSONParseOptions) {
         return;
     }
     const reader = new FileReader();
-    reader.onload = (e) => {
+    reader.onload = () => {
         try {
             const data = JSON.parse((reader.result as string) ?? '[]');
             if(options.onsuccess)options.onsuccess(data);

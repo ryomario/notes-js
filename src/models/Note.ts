@@ -48,10 +48,6 @@ export default class Note {
     private _labels?: string;
     get labels(): Array<string> {return this.getAttribute('labels')}
     set labels(labels: string|Array<string>) {this.setAttribute('labels',labels)}
-    
-    private _changed: boolean;
-    get changed(): boolean {return this.getAttribute('changed')}
-    set changed(changed: boolean) {this.setAttribute('changed',changed)}
 
     constructor(title: string, pinned = false) {
         this._title = title; this._pinned = pinned;
@@ -60,7 +56,6 @@ export default class Note {
         this._created_at = Date.now();
         this._updated_at = this._created_at;
         this._id = this._created_at.toString();
-        this._changed = false;
     }
 
     setAttribute(name: string,value: any) {
@@ -69,7 +64,6 @@ export default class Note {
             case 'title':case 'pinned':case 'content':
                 if((this as any)['_'+name] != value){
                     (this as any)['_'+name] = value;
-                    this._changed = true;
                     this._updated_at = Date.now();
                 }
                 break;
@@ -77,7 +71,6 @@ export default class Note {
                 if(Array.isArray(value))value = value.join(',');
                 if(this._labels != value){
                     this._labels = value;
-                    this._changed = true;
                     this._updated_at = Date.now();
                 }
                 break;
@@ -87,7 +80,7 @@ export default class Note {
     }
     getAttribute(name: string) {
         switch(name){
-            case 'id':case 'title':case 'pinned':case 'content':case 'changed':
+            case 'id':case 'title':case 'pinned':case 'content':
                 return (this as any)['_'+name];
             case 'labels':
                 return this._labels?.split(',').map(label => label.trim()).filter(label => label) ?? [];
@@ -147,7 +140,7 @@ export default class Note {
                (this.content.toLowerCase().includes(str.toLowerCase())) ||
                (this.containsLabel(str));
     }
-    getLastUpdated(t = (tmpl: string, data: any) => tmpl, lang?: string) {
+    getLastUpdated(t = (tmpl: string, _data: any) => tmpl, lang?: string) {
         return t('updated_{{time}}',{
             time: getElapsedTime(this._updated_at,Date.now(),t,lang)
         });
@@ -219,10 +212,8 @@ export default class Note {
     
     static isChanged(note1: Note,note2: Note) {
         const isSame = 
-               (note1._id == note2._id) &&
                (note1._title == note2._title) &&
                (note1._content == note2._content) &&
-               (note1._pinned == note2._pinned) &&
                (note1._labels == note2._labels);
 
         return !isSame;

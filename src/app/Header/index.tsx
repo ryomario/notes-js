@@ -4,7 +4,6 @@ import IconPlus from '../../assets/icons/plus.svg'
 import IconCog from '../../assets/icons/cog.svg'
 import { useTranslation } from 'react-i18next'
 import SearchButton from './SearchButton'
-import Modal from '../../components/Modal'
 import { useContext } from 'react'
 import { ModalManagerContext } from '../../context/ModalManagerContext'
 import ModalSettings, { MODAL_ID as SETTINGS_MODAL_ID } from '../modals/ModalSettings'
@@ -14,7 +13,7 @@ import { NoteAppContext } from '../../context/NoteAppContext'
 
 function Header(){
     const { t } = useTranslation()
-    const { openedModalId, isOpen, openModal, closeModal } = useContext(ModalManagerContext)
+    const { openedModalId, openModal } = useContext(ModalManagerContext)
     const { openNoteModal } = useContext(NoteAppContext)
 
     document.onkeydown = function(e) {

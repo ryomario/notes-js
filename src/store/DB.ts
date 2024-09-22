@@ -16,6 +16,8 @@ const upgradeTableSettings: OnUpgradeDB = function(this: IDBOpenDBRequest ,_even
     let store;
     if(!db.objectStoreNames.contains(TABLE_SETTINGS))store = db.createObjectStore(TABLE_SETTINGS,{ keyPath: 'name' });
     else store = this.transaction?.objectStore(TABLE_SETTINGS);
+
+    console.assert(store?.name == TABLE_SETTINGS);
 }
 
 export function getSetting<V>(name: string): Promise<V|null> {

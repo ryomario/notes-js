@@ -1,4 +1,4 @@
-import { getTheme, useTheme } from "../../../theme"
+import { useTheme } from "../../../theme"
 import ThemeCard from "../../../components/Theme/ThemeCard"
 import styled from "styled-components"
 import { useTranslation } from "react-i18next"

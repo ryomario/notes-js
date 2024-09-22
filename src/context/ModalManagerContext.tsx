@@ -9,11 +9,11 @@ export type ModalManagerContextType = {
 
 const ModalManagerContext: React.Context<ModalManagerContextType> = createContext<ModalManagerContextType>({
     openedModalId: undefined,
-    isOpen(modalId:string) {
+    isOpen(_modalId:string) {
         console.log('is open not handled!')
         return false
     },
-    openModal(modalId:string) {
+    openModal(_modalId:string) {
         console.log('open modal not handled!')
     },
     closeModal() {

@@ -10,11 +10,10 @@ import Note from "../../models/Note"
 import Notes from "../../components/Notes"
 import NotesStore from "../../store/Notes"
 
-const DELAY = 1000 // 1000ms / 1s
 const LOAD_NOTES_COUNT = 5
 export const MODAL_ID = 'modal-search'
 function ModalSearch() {
-    const { openedModalId, isOpen, closeModal: baseCloseModal } = useContext(ModalManagerContext)
+    const { isOpen, closeModal: baseCloseModal } = useContext(ModalManagerContext)
     const { t } = useTranslation()
     const [loading, setLoading] = useState(false)
     const [notes, setNotes] = useState<Array<Note>>([])
@@ -28,7 +27,6 @@ function ModalSearch() {
         setShowNotesCount(LOAD_NOTES_COUNT)
     }
 
-    let inputWait = 0
     const handleSearchInput: FormEventHandler<HTMLInputElement> = (e: FormEvent) => {
         const value = (e.target as HTMLInputElement).value
         setTextSearch((old) => (old != value)? value: old)

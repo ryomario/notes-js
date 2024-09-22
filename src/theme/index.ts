@@ -1,5 +1,4 @@
 import themes from "./themes.json"
-import DB from "../store/DB"
 import { useContext } from "react"
 import { generateNextId } from "../utils/func"
 import { ThemeContext } from "../context/ThemeContext"
