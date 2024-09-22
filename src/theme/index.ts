@@ -3,24 +3,29 @@ import DB from "../store/DB"
 import { useContext } from "react"
 import { generateNextId } from "../utils/func"
 import { ThemeContext } from "../context/ThemeContext"
+import ThemesStore from "../store/Themes"
+import Preferences from "../store/Preferences"
 
 export async function getThemeIds() {
-    return await DB.table('themes').getAllKeys<string>()
+    return await ThemesStore.getAllKeys()
 }
 export async function getNextId() {
     const keys = await getThemeIds()
     return generateNextId(keys,'THEME-')
 }
 export async function getTheme(themeId: string) {
-    return await DB.table('themes').get<any>(themeId)
+    return await ThemesStore.get(themeId)
 }
-export async function getLocalTheme() {
-    const themeId = await DB.table('preferences').get<string>('theme')
-    if(!themeId)return null
-    return await getTheme(themeId)
+export async function getLocalTheme(): Promise<any> {
+    return new Promise((resolve, reject) => {
+        Preferences.get('theme',(themeId) => {
+            if(!themeId)resolve(null)
+            getTheme(themeId).then(resolve).catch(reject)
+        })
+    })
 }
-export async function saveLocalTheme(themeId: string) {
-    return await DB.table('preferences').set('theme', themeId)
+export function saveLocalTheme(themeId: string) {
+    Preferences.set('theme', themeId)
 }
 
 // Populate themes in storage
@@ -28,7 +33,7 @@ export async function saveLocalTheme(themeId: string) {
     for (const key in themes) {
         const theme = (themes as any)[key]
         if(!theme.id)theme.id = await getNextId()
-        DB.table('themes').set(theme.id,theme) // always update on init
+        await ThemesStore.set(theme.id,theme) // always update on init
     }
 })()
 

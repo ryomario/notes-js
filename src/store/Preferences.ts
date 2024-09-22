@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import DB from "./DB";
+import { getSetting, setSetting } from "./DB";
 
-const TABLE = 'preferences'
+// const TABLE = 'preferences'
 
 export default class Preferences {
-    static get(name: string, callback: (data: any)=>void) {
-        DB.table(TABLE).get<any>(name).then(callback)
+    static get(name: string, callback?: (data: any)=>void) {
+        getSetting<any>(name).then(callback)
     }
-    static set(name: string, value: any, callback: ()=>void) {
-        DB.table(TABLE).set(name,value).then(callback)
+    static set(name: string, value: any, callback?: ()=>void) {
+        setSetting(name,value).then(callback)
     }
 }
 export function useSavedState<T>(name: string, defaultValue: T) {
@@ -18,6 +18,7 @@ export function useSavedState<T>(name: string, defaultValue: T) {
             if(isSave){
                 Preferences.get(name,(loadedState: T) => {
                     if(loadedState != undefined)setState(loadedState)
+                    else setState(defaultValue)
                 })
             }else setState(defaultValue)
         })

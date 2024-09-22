@@ -1,10 +1,12 @@
 import React from "react"
 import styled from "styled-components"
 
+export type ButtonSize = 'sm'|'md'|'lg'|'xl'
+
 type ButtonProps = {
     text: string,
     iconOnly?: boolean,
-    size?: string,
+    size?: ButtonSize,
     icon?: React.ReactNode,
     wrap?: boolean,
     onClick?: React.MouseEventHandler<HTMLButtonElement>,
@@ -35,7 +37,7 @@ function Button({text,iconOnly,size,icon,onClick,wrap,disabled,circle,fullWidth,
     )
 }
 
-const StyledButtonText = styled.button`
+export const StyledButtonText = styled.button`
     background-color: transparent;
     color: inherit;
     border: none;

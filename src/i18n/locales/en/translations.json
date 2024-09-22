@@ -103,5 +103,13 @@
     "from_total_{{count}}_items_other": "from total {{count}} items",
     "confirm_export_notes_one": "a note will be exported!",
     "confirm_export_notes_other": "{{count}} notes will be exported!",
-    "export_note_name": "[{{id}}]_all_notes.{{unique}}.json"
+    "export_note_name": "[{{id}}]_all_notes.{{unique}}.json",
+
+    "asc_sort": "Ascending",
+    "desc_sort": "Descending",
+    "sort_by_label": "Sort by",
+    "sort_by_label_title": "Title",
+    "sort_by_label_key": "Key",
+    "sort_by_label_created": "Created",
+    "sort_by_label_updated": "Updated"
 }

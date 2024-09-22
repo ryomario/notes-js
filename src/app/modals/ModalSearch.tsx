@@ -53,15 +53,20 @@ function ModalSearch() {
         if(!loading){
             if(textSearch.trim() != ''){
                 setLoading(true)
-                NotesStore.getAllWithPagination(0,showNotesCount,(allNotes, _, __, _totalPage) => {
-                    setCanLoadMore(_totalPage > 1)
-                    const _notes: Array<Note> = []
-                    allNotes.forEach(note => {
-                        _notes.push(Note.createFromObject(note))
-                    })
-                    setNotes(_notes)
-                    setLoading(false)
-                },{labels: textSearch.trim(), title: textSearch.trim()})
+                NotesStore.getAllWithPagination({
+                    start: 0,
+                    length: showNotesCount,
+                    onfinished(allNotes, _totalPage) {
+                        setCanLoadMore((_totalPage ?? 0) > 1)
+                        const _notes: Array<Note> = []
+                        allNotes.forEach(note => {
+                            _notes.push(Note.createFromObject(note))
+                        })
+                        setNotes(_notes)
+                        setLoading(false)
+                    },
+                    filterAttr: {labels: textSearch.trim(), title: textSearch.trim()},
+                })
             }else {
                 setNotes([])
             }
