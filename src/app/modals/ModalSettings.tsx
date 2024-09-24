@@ -6,6 +6,7 @@ import ThemeSelector from "./inputs/ThemeSelector";
 import ToggleSaveState from "./inputs/ToggleSaveState";
 import LanguageSelector from "./inputs/LanguageSelector";
 import ImportNotes from "./ImportNotes";
+import FeedFakeNotes from "./FeedFakeNotes";
 
 export const MODAL_ID = 'modal-settings'
 function ModalSettings() {
@@ -21,6 +22,13 @@ function ModalSettings() {
             <ThemeSelector/>
             <br />
             <ImportNotes/>
+            {
+                import.meta.env.DEV && (<>
+                    <br />
+                    <br />
+                    <FeedFakeNotes/>
+                </>)
+            }
         </Modal>
     )
 }

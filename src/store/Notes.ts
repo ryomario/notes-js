@@ -18,6 +18,22 @@ type GetAllNotesWithFilterAndOrderAndPaginationProps = GetAllNotesWithFilterAndO
     length: number,
 }
 
+const VERSION = 1;
+const regexKEY = /^(\d{2})(\d{4})$/
+
+function explodeKEY(key: string) {
+    const result = regexKEY.exec(key.substring(key.length - 6, key.length));
+    if(!result)return [];
+    return [result[1],result[2]];
+}
+function generateKEY([version, id]: Array<number>) {
+    if(version > 99)version = 99;
+    if(id > 9999)id = 9999;
+    const str1 = version.toString().padStart(2,'0');
+    const str2 = id.toString().padStart(4,'0');
+    return str1 + str2;
+}
+
 export const TABLE = 'notes'
 export const TABLE_VERSION = 1
 
@@ -64,11 +80,10 @@ export default class NotesStore {
                     cursor.continue();
                     callback?.(note);
                     if(pass){
-                        allData.set(note.id,note);
                         counter++;
                     }
                 }else{
-                    totalData = allData.size;
+                    totalData = counter;
                     onfinished?.(allData, totalData);
                 }
             }
@@ -99,7 +114,7 @@ export default class NotesStore {
                         counter++;
                     }
                 }else{
-                    totalData = allData.size;
+                    totalData = counter;
                     onfinished?.(allData, totalData);
                 }
             }
@@ -149,6 +164,56 @@ export default class NotesStore {
         }
         
         SaveNoteObject();
+    }
+    static deleteAll(): Promise<number> {
+        return new Promise((resolve, reject) => {
+            DB.store(TABLE,{readonly: false}).then(store => {
+                const req = store.getAllKeys();
+                req.onerror = () => {
+                    reject(req.error);
+                }
+                req.onsuccess = () => {
+                    const keys = req.result;
+                    let deleted = 0;
+                    function _delete(idx: number) {
+                        if(keys.length > idx)NotesStore.delete(keys[idx] as string,(isDeleted) => {
+                            if(isDeleted)deleted += 1;
+
+                            _delete(idx + 1);
+                        });
+                        if((idx + 1) >= keys.length){
+                            resolve(deleted);
+                        }
+                    }
+                    _delete(0);
+                }
+            })
+        });
+    }
+    static getNextId(): Promise<string> {
+        return new Promise((resolve, reject) => {
+            DB.store(TABLE,{readonly: true}).then(store => {
+                const req = store.getAllKeys();
+                req.onerror = () => {
+                    reject(req.error);
+                }
+                req.onsuccess = () => {
+                    const keys = req.result;
+                    let max = 0;
+                    keys.forEach(key => {
+                        let num = max;
+                        try{
+                            const [_,id] = explodeKEY(key as string);
+                            num = Number(id);
+                        } catch(error) {
+                            console.log(error);
+                        }
+                        if(num > max)max = num;
+                    });
+                    resolve(generateKEY([VERSION, (max + 1)]));
+                }
+            })
+        });
     }
 }
 

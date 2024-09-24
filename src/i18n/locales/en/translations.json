@@ -111,5 +111,14 @@
     "sort_by_label_title": "Title",
     "sort_by_label_key": "Key",
     "sort_by_label_created": "Created",
-    "sort_by_label_updated": "Updated"
+    "sort_by_label_updated": "Updated",
+
+    "button_setting_feed_notes": "Feed Notes",
+    "modal_feed_notes_title": "Feed With Random Notes",
+    "feed_notes_input_total_label": "Total note for feed",
+    "feed_notes_button_feed": "Feed now",
+    "{{count}} notes deleted!": "{{count}} notes deleted!",
+    "Feeding...": "Feeding...",
+    "Feed completed!": "Feed completed!",
+    "{{count}} notes added!": "{{count}} notes added!"
 }

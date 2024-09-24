@@ -63,7 +63,7 @@ function NotesContent({ open, title, id, filterAttr }: Readonly<NotesContentProp
     }
 
     const loadNotes = () => {
-        if(loading)return
+        if(loading || !sort)return
         setLoading(true)
         NotesStore.getAllWithPagination({
             start: ((currPage - 1) * notesPerPage),

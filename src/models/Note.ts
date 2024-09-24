@@ -1,4 +1,6 @@
+import NotesStore from "../store/Notes";
 import { copyObject, getElapsedTime } from "../utils/func";
+import { faker } from "@faker-js/faker";
 
 export type NoteRaw = {
     id: string,
@@ -49,13 +51,18 @@ export default class Note {
     get labels(): Array<string> {return this.getAttribute('labels')}
     set labels(labels: string|Array<string>) {this.setAttribute('labels',labels)}
 
-    constructor(title: string, pinned = false) {
+    constructor(title: string, pinned = false, generateUUID = true) {
         this._title = title; this._pinned = pinned;
         this._content = '';
         this._labels = '';
         this._created_at = Date.now();
         this._updated_at = this._created_at;
         this._id = this._created_at.toString();
+        if(generateUUID){
+            NotesStore.getNextId().then(id => {
+                this._id = id;
+            });
+        }
     }
 
     setAttribute(name: string,value: any) {
@@ -177,7 +184,7 @@ export default class Note {
         return clonedNote;
     }
     static createFromObject(obj: NoteRaw): Note {
-        const note = new Note(obj.title, obj.pinned);
+        const note = new Note(obj.title, obj.pinned, false);
         note._id = obj.id;
         note._content = obj.content;
         note._created_at = obj.created_at;
@@ -188,7 +195,7 @@ export default class Note {
         return note;
     }
     static createNewFromObject(obj: NoteRaw) {
-        const note = new Note(obj.title, obj.pinned??false);
+        const note = new Note(obj.title, obj.pinned??false,!obj.id);
         if(obj.id)note._id = obj.id;
         note._content = obj.content;
         if(obj.created_at)note._created_at = obj.created_at;
@@ -245,6 +252,20 @@ export default class Note {
         }
 
         return sort;
+    }
+    static createRandomNote() {
+        const labelsLength = Math.round(Math.random() * 9) + 1;
+        const dateCreated = faker.date.past({ years: 4 }).getTime();
+        const dateUpdated = (Math.random() > 0.5) ? dateCreated : faker.date.recent({ days: 15 }).getTime();
+        return Note.createFromObject({
+            id: faker.string.uuid(),
+            title: faker.lorem.sentence({ min: 3, max: 5 }),
+            pinned: faker.datatype.boolean(0.2),
+            content: faker.lorem.paragraphs({ min: 2, max: 5 }),
+            labels: (Math.random() > 0.6)?faker.helpers.uniqueArray(faker.word.noun,labelsLength).join(',') : undefined,
+            created_at: dateCreated,
+            updated_at: dateUpdated,
+        })
     }
 }
 type SortableColumnsType = {
