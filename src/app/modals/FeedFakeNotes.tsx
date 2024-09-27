@@ -5,7 +5,7 @@ import Modal from "../../components/Modal"
 import NotesStore from "../../store/Notes"
 import { ChangeEvent, useContext, useState } from "react"
 import styled from "styled-components"
-import NoteModel, { NoteRaw } from "../../models/Note"
+import NoteModel from "../../models/Note"
 import { NoteAppContext } from "../../context/NoteAppContext"
 import { StyledField } from "./note/NoteTitle"
 

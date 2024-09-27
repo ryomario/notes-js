@@ -12,6 +12,9 @@ import NotesStore from "../../store/Notes"
 
 const LOAD_NOTES_COUNT = 5
 export const MODAL_ID = 'modal-search'
+const DELAY = 1000 // 1 second
+let inputWait = 0;
+
 function ModalSearch() {
     const { isOpen, closeModal: baseCloseModal } = useContext(ModalManagerContext)
     const { t } = useTranslation()
@@ -30,31 +33,21 @@ function ModalSearch() {
     const handleSearchInput: FormEventHandler<HTMLInputElement> = (e: FormEvent) => {
         const value = (e.target as HTMLInputElement).value
         setTextSearch((old) => (old != value)? value: old)
-        setShowNotesCount(LOAD_NOTES_COUNT)
-        // if(inputWait != 0){
-        //     clearTimeout(inputWait)
-        //     inputWait = 0
-        // }
-        // inputWait = setTimeout(() => {
-        //     inputWait = 0
-        //     setTextSearch((old) => (old != value)? value: old)
-        //     setShowNotesCount(LOAD_NOTES_COUNT)
-        // }, DELAY);
     }
     const loadMore = () => {
         if(canLoadMore){
             setShowNotesCount(old => old + LOAD_NOTES_COUNT)
         }
     }
-
-    useEffect(() => {
+    const loadNotes = () => {
         if(!loading){
             if(textSearch.trim() != ''){
                 setLoading(true)
                 NotesStore.getAllWithPagination({
                     start: 0,
                     length: showNotesCount,
-                    onfinished(allNotes, _totalPage) {
+                    onfinished(allNotes, _totalItems) {
+                        let _totalPage = Math.ceil((_totalItems ?? 0) / showNotesCount)
                         setCanLoadMore((_totalPage ?? 0) > 1)
                         const _notes: Array<Note> = []
                         allNotes.forEach(note => {
@@ -69,7 +62,23 @@ function ModalSearch() {
                 setNotes([])
             }
         }
-    },[textSearch, showNotesCount])
+    }
+
+    useEffect(() => {
+        loadNotes()
+    },[showNotesCount])
+    
+    useEffect(() => {
+        if(inputWait != 0){
+            clearTimeout(inputWait)
+            inputWait = 0
+        }
+        inputWait = setTimeout(() => {
+            inputWait = 0
+            loadNotes()
+            setShowNotesCount(LOAD_NOTES_COUNT)
+        }, DELAY);
+    },[textSearch])
 
     const footer = notes.length == 0 ? t('search_note_empty'):canLoadMore && <Button text={t('search_note_load_more')} onClick={loadMore} size="md"/>
 
