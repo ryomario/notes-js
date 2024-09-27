@@ -71,7 +71,7 @@ export default class Note {
             case 'title':case 'pinned':case 'content':
                 if((this as any)['_'+name] != value){
                     (this as any)['_'+name] = value;
-                    this._updated_at = Date.now();
+                    if(name!='pinned')this._updated_at = Date.now();
                 }
                 break;
             case 'labels':
@@ -98,6 +98,9 @@ export default class Note {
         }
     }
 
+    toggleUpdated(): void {
+        this._updated_at = Date.now();
+    }
     hasLabels(): boolean {
         return (typeof this._labels === 'string' && this._labels !== '');
     }
@@ -220,6 +223,7 @@ export default class Note {
     static isChanged(note1: Note,note2: Note) {
         const isSame = 
                (note1._title == note2._title) &&
+               (!note1._pinned == !note2._pinned) &&
                (note1._content == note2._content) &&
                (note1._labels == note2._labels);
 

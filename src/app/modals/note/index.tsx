@@ -116,6 +116,8 @@ function ModalNote() {
         async function save() {
             dispatch({ type: ModalNoteActionKind.SAVING })
 
+            state.note.toggleUpdated()
+            
             NotesStore.set(state.note.id,state.note.toObject(),() => {
                 toggleRefresh?.()
                 dispatch({ type: ModalNoteActionKind.SAVING, payload: { saving: false } })
