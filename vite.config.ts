@@ -4,6 +4,7 @@ import svgr from 'vite-plugin-svgr'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/notes-js/',
   plugins: [svgr({
   // svgr options: https://react-svgr.com/docs/options/
   svgrOptions: {
